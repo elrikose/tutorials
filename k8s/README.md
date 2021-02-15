@@ -51,11 +51,6 @@ Specify a default Kube config
 kubectl --kubeconfig devops.kubeconfig get all
 ```
 
-Install kubectx
-
-```
-```
-
 # Nodes
 
 Get info about the nodes
