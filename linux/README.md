@@ -1,5 +1,13 @@
 # Linux
 
+# Linux Boot
+
+- BIOS
+- Master Boot Record
+- Loader (grub)
+- Kernel
+- User Processes
+
 # System Information
 
 Linux Distro Info
