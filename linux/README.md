@@ -1,6 +1,8 @@
 # Linux
 
-# Linux Boot
+Linux is the swiss army knife of operating systems. 
+
+# Linux Boot Order
 
 - BIOS
 - Master Boot Record
@@ -8,50 +10,8 @@
 - Kernel
 - User Processes
 
-# System Information
+# Other Topics
 
-Linux Distro Info
-
-```
-cat /etc/*-release
-cat /proc/version
-
-lsb_release -a
-```
-
-Kernel Info
-
-```
-uname -a
-```
-
-Show CPU/Memory information
-
-```
-cat /proc/cpuinfo
-lscpu
-
-cat /proc/meminfo
-```
-
-Process Manager
-
-```
-top
-```
-
-# Find
-
-```
-# Find all files
-find . -type f
-
-# Find all folders
-find . -type d
-
-# Find all text files
-find . -type f -name  "*.txt"
-
-# Find all files to a certain folder depth (eg. 4)
-find . -maxdepth 4 -type f
-```
+- [System Information](system.md)
+- [find](find.md) - find files and folders
+- [grep](grep.md) - 
