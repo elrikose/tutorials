@@ -31,20 +31,20 @@ Ripgrep is a fast grep tool that does a better job of outputing text for multipl
 
 Install:
 
-```
+```shell
 brew install ripgrep
 ```
 
 One file:
 
-```
+```shell
 $ rg "^root" /etc/passwd 
 12:root:*:0:0:System Administrator:/var/root:/bin/sh
 ```
 
 Multiple files:
 
-```
+```shell
 $ rg "root" /etc/passwd /etc/group 
 /etc/group
 13:wheel:*:0:root

@@ -14,4 +14,4 @@ Linux is the swiss army knife of operating systems.
 
 - [System Information](system.md)
 - [find](find.md) - find files and folders
-- [grep](grep.md) - 
+- [grep](grep.md) - search for strings in files
