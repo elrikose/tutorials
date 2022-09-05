@@ -4,7 +4,7 @@ Linux is the swiss army knife of operating systems.
 
 # Linux Boot Order
 
-- BIOS
+- BIOS / EFI
 - Master Boot Record
 - Loader (grub)
 - Kernel

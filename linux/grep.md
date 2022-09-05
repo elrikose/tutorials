@@ -27,7 +27,7 @@ daemon:*:1:1:System Services:/var/root:/usr/bin/false
 
 # ripgrep (rg)
 
-Ripgrep is a fast grep tool that does a better job of outputing text for multiple files. It also shows the line number 
+Ripgrep is a fast grep tool that does a better job of outputing text for multiple files. It also shows the line number.
 
 Install:
 
