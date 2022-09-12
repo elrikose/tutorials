@@ -53,7 +53,7 @@ The load balancer allows access from 0.0.0.0 on HTTPS/HTTP in a security group, 
 - Perfect for microservices/containers.
 - Feature to redirect to ECS dynamic port.
 - Fixed hostname XXX.region.elb.amazonaws.com
-- App servers don't see IP of client. True IP is inserted into HTTP headers
+- App servers don't see IP of client. True IP is inserted into HTTP headers (X-Forwarded-For)
 
 Target Group targets can be:
 - EC2 Instances
