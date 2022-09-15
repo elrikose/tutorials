@@ -8,4 +8,5 @@ This folder has a lot of notes that I took when going through the [Ultimate AWS 
 - [AMI](AMI.md) - Amazon Machine Image
 - [ELB](ELB.md) - Elastic Load Balancers
 - [ASG](ASG.md) - Auto Scaling Groups
+- [RDS](RDS.md) - Relational Database Service
 - [Route 53](Route53.md) - Amazon DNS
