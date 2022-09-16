@@ -9,4 +9,5 @@ This folder has a lot of notes that I took when going through the [Ultimate AWS 
 - [ELB](ELB.md) - Elastic Load Balancers
 - [ASG](ASG.md) - Auto Scaling Groups
 - [RDS](RDS.md) - Relational Database Service
+- [ElastiCache](ElastiCache.md) - ElastiCache
 - [Route 53](Route53.md) - Amazon DNS
