@@ -12,3 +12,4 @@ This folder has a lot of notes that I took when going through the [Ultimate AWS 
 - [ElastiCache](ElastiCache.md) - ElastiCache
 - [Route 53](Route53.md) - Amazon DNS
 - [VPC](VPC.md) - Virtual Private Cloud
+- [S3](S3.md) - Simple Storage Service
