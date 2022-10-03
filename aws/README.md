@@ -16,3 +16,4 @@ This folder has a lot of notes that I took when going through the [Ultimate AWS 
 - [AWS CLI](CLI.md) - AWS Command-line Interface
 - [CloudFront](CloudFront.md) - CloudFront
 - [ECS](ECS.md) - Elastic Container Service
+- [Elastic Beanstalk](Beanstalk.md) - Elastic Beanstalk
