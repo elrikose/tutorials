@@ -20,3 +20,4 @@ This folder has a lot of notes that I took when going through the [Ultimate AWS 
 - [CICD](CICD.md) - CodeCommit, CodeBuild, CodePipeline, CodeDeploy, CodeStar, CodeArtifact, CodeGuru
 - [CloudFormation](CloudFormation.md) - CloudFormation
 - [Monitoring](Monitoring.md) - CloudWatch, EventBridge, X-Ray, CloudTrail
+- [Integration and Messaging](Messaging.md) - SQS, SNS, Kinesis
