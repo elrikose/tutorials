@@ -5,5 +5,6 @@ This knowledge base repo is to maintain a set of documentation to revisit when I
 - [aws](aws) - Amazon Web Services 
 - [brew](brew) - Homebrew package 
 - [gcloud](gcloud) - Google Cloud CLI
+- [helm](helm) - Helm
 - [linux](linux) - Linux OS
 - [python](python) - Python
