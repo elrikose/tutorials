@@ -256,17 +256,117 @@ kubectl create secret generic my-secret --from-literal=key-id="key"
 kubectl create secret generic my-secret --from-literal=key-id="key" --from-literal=access-key="key"
 ```
 
+# API Resources
+
+To get a list of all the resources and their preferred versions and shortcut name:
+
+```sh
+$ kubectl api-resources -o wide
+NAME                              SHORTNAMES   APIVERSION                             NAMESPACED   KIND                             VERBS
+...
+pods                              po           v1                                     true         Pod                              [create delete deletecollection get list patch update watch]
+
+```
+
+To get a list off all versions including preferred for an api group in the `preferredVersion` field:
+
+```
+kubectl proxy 8002 &
+curl localhost:8002/apis/rbac.authorization.k8s.io
+```
+
+
+To convert an old Deployment to `apps/v1`, you install the kubectl-convert plugin
+
+```
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl-convert"
+sudo install -o root -g root -m 0755 kubectl-convert /usr/local/bin/kubectl-convert
+```
+
+
+And then can run:
+
+```
+kubectl convert -f ./deployment-old.yaml --output-version apps/v1 > deployment-new.yaml
+```
+
 # Custom Resource Definitions (CRDs)
+
+Custom resources require a custom controller to process. A CRD is used to define the custom resource for the controller.
 
 Get/Describe CRDs
 
 ```
 kubectl get crd
 kubectl get crd networking.istio.io
-
+kubectl get crd networking.istio.io -o yaml
 kubectl describe crd networking.istio.io
-kubectl describe crd networking.istio.io -o yaml
 ```
+
+Properties:
+- Scoped as Namespaced or Cluster wide
+- Singluar and Plural name
+- Shortcut name
+- Name must use plural as prefix
+- Must set `storage` and `served` to true
+
+```yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: foos.samplecontroller.k8s.io
+spec:
+  group: samplecontroller.k8s.io
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      schema:
+        # schema used for validation
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                deploymentName:
+                  type: string
+                replicas:
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+            status:
+              type: object
+              properties:
+                availableReplicas:
+                  type: integer
+  names:
+    kind: Foo
+    plural: foos
+  scope: Namespaced
+```
+
+# Custom Resources
+
+Custom resource of a CRD.
+
+```yaml
+apiVersion: samplecontroller.k8s.io/v1alpha1
+kind: Foo
+metadata:
+  name: example-foo
+spec:
+  deploymentName: example-foo
+  replicas: 1
+```
+
+# Custom Controller
+
+A custom controller is needed to read items from ETCD and act upon them using the Kubernetes API. There is a python controller library, but people often use Go since it handles things like Queues and [Informers](https://macias.info/entry/202109081800_k8s_informers.md).
+
+https://github.com/kubernetes/sample-controller
+
+Controllers generally use a kubeconfig as a command-line parameter for accessing cluster resources.
 
 # Argo CD
 
