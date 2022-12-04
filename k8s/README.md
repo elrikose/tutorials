@@ -7,20 +7,20 @@ https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 - Kubernetes Lens: https://k8slens.dev
 - K9s: https://k9scli.io
 
-```
+```sh
 brew install derailed/k9s/k9s
 ```
 
 # Cluster Info
 
 Display addresses and services
-```
+```sh
 kubectl cluster-info
 ```
 
 Dump cluster state
 
-```
+```sh
 kubectl cluster-info dump
 ```
 
@@ -28,33 +28,33 @@ kubectl cluster-info dump
 
 File that contains kube configs
 
-```
+```sh
 $HOME/.kube/config
 ```
 
 List the kube context
 
-```
+```sh
 kubectl config current-context
 kubectx
 ```
 
 Change the kube context
 
-```
+```sh
 kubectx contextname
 ```
 
 Specify a default Kube config
 
-```
+```sh
 kubectl --kubeconfig devops.kubeconfig get all
 ```
 
 # Nodes
 
 Get info about the nodes
-```
+```sh
 # Simple
 kubectl get nodes
 
@@ -66,21 +66,21 @@ kubectl get nodes -o wide
 
 List the namespaces
 
-```
-kubens get ns
+```sh
+kubectl get ns
 
 kubens
 ```
 
 Change the namespace
 
-```
+```sh
 kubens namespace
 ```
 
 Create/delete a namespace
 
-```
+```sh
 kubectl create namespace new-namespace
 kubectl create ns new-namespace
 
@@ -91,28 +91,28 @@ kubectl delete ns new-namespace
 
 Install kubectl on Mac
 
-```
+```sh
 brew install kubectl
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/darwin/amd64/kubectl"
 ```
 
 Install kubectl on Linux
 
-```
+```sh
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 ```
 
 Get the version
 
-```
+```sh
 $ kubectl version
 Client Version: version.Info{Major:"1", Minor:"16", GitVersion:"v1.16.2", GitCommit:"c97fe5036ef3df2967d086711e6c0c405941e14b", GitTreeState:"clean", BuildDate:"2019-10-15T23:42:50Z", GoVersion:"go1.12.10", Compiler:"gc", Platform:"darwin/amd64"}
 ```
 
 Get all items
 
-```
+```sh
 # Get all items in the current namespace
 kubectl get all
 
@@ -125,7 +125,7 @@ kubectl get all -A
 
 Manage a kube config yaml file
 
-```
+```sh
 kubectl apply -f pod_config.yaml
 kubectl delete -f pod_config.yaml
 kubectl edit -f pod_config.yaml
@@ -133,13 +133,13 @@ kubectl edit -f pod_config.yaml
 
 Apply all the kube configs in a folder path
 
-```
+```sh
 kubectl apply -k folder
 ```
 
 Get the bitnami Docker image
 
-```
+```sh
 docker pull bitnami/kubectl
 docker pull bitnami/kubectl:1.17
 docker pull bitnami/kubectl:1.18
@@ -147,7 +147,7 @@ docker pull bitnami/kubectl:1.18
 
 Setup a reverse proxy to securely reach ports on the cluster
 
-```
+```sh
 kubectl proxy
 
 curl http://localhost:8080/api/
@@ -155,7 +155,7 @@ curl http://localhost:8080/api/
 
 Port-forward on the local host to a service (8001 -> 8080)
 
-```
+```sh
 kubectl port-forward svc/nginx 8001:8080
 ```
 
@@ -163,13 +163,13 @@ kubectl port-forward svc/nginx 8001:8080
 
 Install kubectx/kubens on Mac
 
-```
+```sh
 brew install kubectx
 ```
 
 Install kubectx/kubens on Linux
 
-```
+```sh
 sudo apt install kubectx
 
 or
@@ -183,7 +183,7 @@ sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 List pods
 
-```
+```sh
 # Get all pods in current namespace
 kubectl get pods
 kubectl get po
@@ -197,7 +197,7 @@ kubectl get po -A
 
 Describe info about a pod 
 
-```
+```sh
 # Text
 kubectl describe po pod-name
 
@@ -207,13 +207,13 @@ kubectl describe po pod-name -o yaml
 
 Delete a pod
 
-```
+```sh
 kubectl delete po pod-name
 ```
 
 Get the logs of a pod
 
-```
+```sh
 # Get the logs of a pod
 kubectl logs pod-name
 
@@ -225,7 +225,7 @@ kubectl logs pod-name
 
 Get/Describe a service
 
-```
+```sh
 kubectl get svc service-name
 kubectl get svc service-name -n test
 
@@ -234,13 +234,13 @@ kubectl describe svc service-name --namespace=jenkins
 
 Port forward local host to service (8000 -> 443)
 
-```
+```sh
 kubectl port-forward -n istio-system svc/istio-ingressgateway 8000:443
 ```
 
 Delete a service
 
-```
+```sh
 kubectl delete svc service-name
 ```
 
@@ -248,7 +248,7 @@ kubectl delete svc service-name
 
 Create a generic secret
 
-```
+```sh
 # Singles
 kubectl create secret generic my-secret --from-literal=key-id="key"
 
@@ -270,7 +270,7 @@ pods                              po           v1                               
 
 To get a list off all versions including preferred for an api group in the `preferredVersion` field:
 
-```
+```sh
 kubectl proxy 8002 &
 curl localhost:8002/apis/rbac.authorization.k8s.io
 ```
@@ -278,7 +278,7 @@ curl localhost:8002/apis/rbac.authorization.k8s.io
 
 To convert an old Deployment to `apps/v1`, you install the kubectl-convert plugin
 
-```
+```sh
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl-convert"
 sudo install -o root -g root -m 0755 kubectl-convert /usr/local/bin/kubectl-convert
 ```
@@ -286,7 +286,7 @@ sudo install -o root -g root -m 0755 kubectl-convert /usr/local/bin/kubectl-conv
 
 And then can run:
 
-```
+```sh
 kubectl convert -f ./deployment-old.yaml --output-version apps/v1 > deployment-new.yaml
 ```
 
@@ -296,7 +296,7 @@ Custom resources require a custom controller to process. A CRD is used to define
 
 Get/Describe CRDs
 
-```
+```sh
 kubectl get crd
 kubectl get crd networking.istio.io
 kubectl get crd networking.istio.io -o yaml
@@ -372,35 +372,35 @@ Controllers generally use a kubeconfig as a command-line parameter for accessing
 
 Install Argo CD
 
-```
+```sh
 kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.7.7/manifests/install.yaml
 ```
 
 Uninstall Argo CD
 
-```
+```sh
 kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.7.7/manifests/install.yaml
 kubectl delete ns argocd
 ```
 
 Access ArgoCD on port 8080
 
-```
+```sh
 kubectl port-forward svc/argocd-server -n argocd 8080:443
 ``` 
 
 
 Patch Argo CD to Load Balancer or back to ClusterIP:
 
-```
+```sh
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "ClusterIP"}}'
 ```
 
 Label a namespace for istio
 
-```
+```sh
 kubectl label namespace argocd istio-injection=enabled
 ```
 
@@ -408,20 +408,20 @@ kubectl label namespace argocd istio-injection=enabled
 
 Install minikube
 
-```
+```sh
 brew install minikube
 ```
 
 Version and help
 
-```
+```sh
 minikube version
 minikube
 ```
 
 Main Operations
 
-```
+```sh
 # Start a new minikube
 minikube start
 minikube start --memory 4096
@@ -441,7 +441,7 @@ minikube profile
 
 Deploy nginx to cluster
 
-```
+```sh
 # Create a 3 replica nginx deployment
 kubectl create deployment nginx --image=nginx --replicas=3
 
@@ -461,12 +461,14 @@ kubectl delete deployment nginx
 # Tekton
 
 Install pipeline and dashboard
-```
- kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
- kubectl apply -f https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
+
+```sh
+kubectl apply -f https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
+kubectl apply -f https://storage.googleapis.com/tekton-releases/dashboard/latest/tekton-dashboard-release.yaml
 ```
 
 Expose the Tekton dashboard
-```
+
+```sh
 kubectl --namespace tekton-pipelines port-forward svc/tekton-dashboard 9097:9097
 ```
