@@ -18,6 +18,8 @@ To turn on changing panes and resizing by mouse
 set -g mouse on
 ```
 
+This doesnt seem to work too well in iTerm2 on the Mac.
+
 # Commands
 
 Start tmux:

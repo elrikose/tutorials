@@ -6,5 +6,7 @@ This knowledge base repo is to maintain a set of documentation to revisit when I
 - [brew](brew) - Homebrew package 
 - [gcloud](gcloud) - Google Cloud CLI
 - [helm](helm) - Helm
+- [kubernetes](k8s) - Kubernetes and CKA notes
 - [linux](linux) - Linux OS
 - [python](python) - Python
+- [tmux](tmux) - Terminal multi-pane utility
