@@ -4,12 +4,12 @@ I have started to learn `tmux` as that is the only shell pane tool that is avail
 
 # Configuration
 
-Add the following to `~/.tmux.conf` to change the default prefix from the awkward to reach `CTRL-B` to the closer `CTRL-A`:
+Add the following to `~/.tmux.conf` to change the default prefix. I use `CTRL-p` instead of the awkward to reach with one hand `CTRL-b`:
 
 ```
 unbind C-b
-set -g prefix C-a
-bind-key C-a send-prefix
+set -g prefix C-p
+bind-key C-p send-prefix
 ```
 
 To turn on changing panes and resizing by mouse
@@ -41,19 +41,19 @@ tmux -2 attach-session -d
 
 ## Splitting panes
 
-- Split a pane horizontally: `CTRL-A %`
-- Split a pane vertically: `CTRL-A "`
+- Split a pane horizontally: `CTRL-p %`
+- Split a pane vertically: `CTRL-p "`
 
 ## Navigation
 
-- Navigate **up** a pane: `CTRL-A ↑`
-- Navigate **down** a pane: `CTRL-A ↓`
-- Navigate **left** a pane: `CTRL-A ←`
-- Navigate **right** a pane: `CTRL-A →`
+- Navigate **up** a pane: `CTRL-p ↑`
+- Navigate **down** a pane: `CTRL-p ↓`
+- Navigate **left** a pane: `CTRL-p ←`
+- Navigate **right** a pane: `CTRL-p →`
 
 ## Resizing a pane
 
-- Resize current pane **up**: `CTRL-A Option-↑`
-- Resize current pane **down**: `CTRL-A Option-↓`
-- Resize current pane **left**: `CTRL-A Option-←`
-- Resize current pane **right**: `CTRL-A Option-→`
+- Resize current pane **up**: `CTRL-p Option-↑`
+- Resize current pane **down**: `CTRL-p Option-↓`
+- Resize current pane **left**: `CTRL-p Option-←`
+- Resize current pane **right**: `CTRL-p Option-→`
