@@ -458,6 +458,40 @@ kubectl delete service nginx
 kubectl delete deployment nginx 
 ```
 
+# Backup/Restore up ETCD
+
+## Backup
+
+Backups come from the API server, so you need the creds
+
+```sh
+export ETCDCTL_API=3
+etcdclt snapshot save --endpoints 127.0.0.1:2379 \
+ --cacert=/etc/kubernetes/pki/etcd/ca.crt
+ --cert=/etc/kubernetes/pki/etcd/server.crt
+ --key=/etc/kubernetes/pki/etcd/server.key
+ /home/user/etcd_backup.db
+```
+
+## Restore
+
+Restore the backup to a new etcd data dir
+
+```sh
+mkdir /var/lib/etcd-restore-location
+
+export ETCDCTL_API=3
+etcdclt snapshot restore --data-dir /var/lib/etcd-restore-location /home/user/etcd_backup.db
+```
+
+And then edit the static manifest for etcd:
+
+```
+vi /etc/kubernetes/manifest/etcd.yaml
+```
+
+And change the `hostPath:` from `/var/lib/etcd` to `/var/lib/etcd-restore-location`.
+
 # Tekton
 
 Install pipeline and dashboard
