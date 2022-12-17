@@ -35,7 +35,7 @@ ring-732187.lan (192.168.1.22) at 24:7b:4d:7d:21:87 on en0 ifscope [ethernet]
 ...
 ```
 
-Get a list of open ports (Linux)
+Get a list of open ports (Linux):
 
 ```sh
 $ netstat -tuple
@@ -47,17 +47,20 @@ tcp        0      0 localhost:32401         0.0.0.0:*               LISTEN      
 tcp        0      0 localhost:32600         0.0.0.0:*               LISTEN      plex       29120      -
 tcp        0      0 0.0.0.0:6443            0.0.0.0:*               LISTEN      root       24009      -
 tcp        0      0 0.0.0.0:8000            0.0.0.0:*               LISTEN      root       26578      -
-tcp        0      0 localhost:domain        0.0.0.0:*               LISTEN      systemd-resolve 22501      -
+...
 ```
 
 Get a list of open ports (macOS):
 
 ```sh
-$ netstat -anvp tcp | grep LISTEN
+$ netstat -anvp tcp
+Active Internet connections (including servers)
+Proto Recv-Q Send-Q  Local Address          Foreign Address        (state)      rhiwat
 tcp6       0      0  *.54415                *.*                    LISTEN       131072  ...
 tcp4       0      0  *.54415                *.*                    LISTEN       131072  ...
 tcp6       0      0  *.5000                 *.*                    LISTEN       131072  ...
 tcp4       0      0  *.5000                 *.*                    LISTEN       131072  ...
 tcp6       0      0  *.7000                 *.*                    LISTEN       131072  ...
 tcp4       0      0  *.7000                 *.*                    LISTEN       131072  ...
+...
 ```
