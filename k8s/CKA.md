@@ -226,10 +226,17 @@ Then you upgrade the control plane
 kubeadm upgrade apply v1.26.0
 ```
 
-And then you upgrade the kubelet:
+And then you upgrade the kubelet and kubectl:
 
 ```
-sudo apt install kubelet=1.26.0-00
+sudo apt install kubelet=1.26.0-00 kubectl=1.26.0-00
+```
+
+You may need to reload the daemon and restart kubelet service after it has been upgraded.
+
+```sh
+systemctl daemon-reload
+systemctl restart kubelet
 ```
 
 ## Worker Node
