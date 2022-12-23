@@ -273,3 +273,82 @@ You may need to reload the daemon and restart kubelet service after it has been 
 systemctl daemon-reload
 systemctl restart kubelet
 ```
+
+# Environment Variables in Pods
+
+Three different ways.
+
+1. using `env:`
+
+```yaml
+  spec:
+    containers:
+    - image: nginx
+      env:
+      - name: MY_ENV
+        value: production
+```
+
+2. Using all entries in a config map. Create the config map:
+
+```sh
+kubectl create cm my-env-vars --from-literal MY_ENV=staging
+```
+
+And then attach the config map to the pod spec:
+
+```yaml
+  spec:
+    containers:
+    - image: nginx
+      envFrom:
+      - configMapRef:
+          name: my-env-vars
+```
+
+3. Or just one key from a config map.
+
+```sh
+kubectl create cm my-env-vars --from-literal MY_ENV=development
+```
+
+And then attach one key from the config map to the pod spec:
+
+```yaml
+  spec:
+    containers:
+    - image: nginx
+      env:
+        - name: MY_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: my-env-vars
+              key: MY_ENV
+```
+
+# Secrets
+
+Create a secret from a literal:
+
+```sh
+kubectl create secret generic my-password --from-literal key=big-long-key
+```
+
+It will generate a key like so that is `base64` encoded:
+
+```yaml
+apiVersion: v1
+data:
+  key: YmlnLWxvbmcta2V5
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: my-password
+```
+
+Which you can get back like so:
+
+```sh
+$ echo "YmlnLWxvbmcta2V5" | base64 -d
+big-long-key
+```
