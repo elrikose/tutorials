@@ -24,8 +24,8 @@ The scripts require at least 4 GB of RAM (2 GB per node) and a healthy bit of st
 
 Almost every question is relevant to my cluster except the troubleshooting where you have to fix a __broken__ cluster. In the questions, I have also renamed K8s resources and abbreviated the text in the questions to simplify them for my needs. Next to each section header is the weight of the question on the test. Note two things:
 
-- The higher point questions (8-10%) are toward the end of the exam
-- You don't have to go in order, but must manually keep track of the answers
+- Outside of the PV/PVC question, the higher point questions (8-10%) are toward the end of the exam
+- You don't have to go in order, but you will then have to manually keep track of the questions you have answered.
 
 I have included the manifests I have created in the [samples](./samples/) subfolder.
 
@@ -103,7 +103,7 @@ kubectl scale nginx-ss -n q3 --replicas=1
 ```sh
 kubectl create ns q4
 
-kubectl run nginx-probes --image=nginx:1.22.1 -n q4--dry-run=client -o yaml > nginx-q4.yaml
+kubectl run nginx-probes --image=nginx:1.22.1 -n q4 --dry-run=client -o yaml > nginx-q4.yaml
 ```
 
 Add the liveness and readiness probe section:
@@ -142,7 +142,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: nginx-ready
+    app: probes
   name: nginx-ready
   namespace: q4
 spec:
@@ -164,7 +164,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: nginx-ready
+    app: probes
   name: nginx-probes-service
   namespace: q4
 spec:
@@ -225,7 +225,6 @@ spec:
 
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/#create-a-persistentvolumeclaim
 
-
 ```yaml
 ---
 apiVersion: v1
@@ -276,7 +275,6 @@ spec:
       containers:
       - image: nginx:1.22.1
         name: nginx
-        resources: {}
         volumeMounts:
         - mountPath: "/tmp/data"
           name: nginx-data
@@ -284,7 +282,6 @@ spec:
       - name: nginx-data
         persistentVolumeClaim:
           claimName: nginx-data-pvc
-status: {}
 ```
 
 ## Q7: Observability (1%)
