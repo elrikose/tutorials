@@ -20,12 +20,14 @@ Below I have tried to craft the questions to be more useable for the 2 node clus
 
 https://github.com/emartin-hv/devops/tree/main/k8s
 
-The scripts require at least 4 GB of RAM (2 GB per node) and a healthy bit of storage,
+The scripts require at least 4 GB of RAM (2 GB per node) and a healthy bit of storage.
 
 Almost every question is relevant to my cluster except the troubleshooting where you have to fix a __broken__ cluster. In the questions, I have also renamed K8s resources and abbreviated the text in the questions to simplify them for my needs. Next to each section header is the weight of the question on the test. Note two things:
 
 - The higher point questions (8-10%) are toward the end of the exam
 - You don't have to go in order, but must manually keep track of the answers
+
+I have included the manifests I have created in the [samples](./samples/) subfolder.
 
 ## Q1: Kube Contexts (1%)
 
