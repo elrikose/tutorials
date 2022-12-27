@@ -5,22 +5,24 @@ Here are a couple of YouTube videos of people who took the [killer.sh](https://k
 - https://www.youtube.com/watch?v=uUUwvPUcTBg
 - https://www.youtube.com/watch?v=EZ5mOR08QdQ
 
-At 4 hours, the first video is very complete and proves that even a person who knows what they are doing can't complete the exam without knowing all of this like the back of their hand. The second video is only 2 hours and the user only successfully made it through about 16 out of 25 questions.
+At 4 hours, the first video is very complete and proves that even a person who knows what they are doing can't complete the exam without knowing all of this like the back of their hand. The second video is only 2 hours and the user only successfully made it poorly through about 16 out of 25 questions.
 
-The videos also show that the simulator UI is flakey:
+The videos also show that the simulator UI is flakey, including:
 
-- Multi-line cut and paste from the questions area 
+- Multi-line cut and paste from the questions area to the Terminal.
 - The notepad is often needed for an intermediate paste to keep line formatting working
-- The notepad was irrecoverable at one point and required intervention from the proctor
+- The notepad was irrecoverable at one point and required intervention from the proctor.
 - Multi-terminal support is available, but very basic. I am still going to try to get better at using `tmux`.
 
 # Notes
 
-Below I have tried to craft the questions to be more useable for my 2 node cluster that I have created locally via the multipass scripts in my Github repository:
+Below I have tried to craft the questions to be more useable for the 2 node cluster that I create locally. The cluster is created via Ubuntu `multipass` based scripts in my Github repository and should be rather portable:
 
 https://github.com/emartin-hv/devops/tree/main/k8s
 
-That way I can use them in my own cluster. Almost every question is relevant except the troubleshooting where you have to fix a broken cluster. I have also renamed K8s resources and abbreviated the questions to simplify the questions. Next to each section header is the weight of the question on the test. Note two things:
+The scripts require at least 4 GB of RAM (2 GB per node) and a healthy bit of storage,
+
+Almost every question is relevant to my cluster except the troubleshooting where you have to fix a __broken__ cluster. In the questions, I have also renamed K8s resources and abbreviated the text in the questions to simplify them for my needs. Next to each section header is the weight of the question on the test. Note two things:
 
 - The higher point questions (8-10%) are toward the end of the exam
 - You don't have to go in order, but must manually keep track of the answers
