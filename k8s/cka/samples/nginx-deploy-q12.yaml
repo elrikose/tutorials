@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: q12
+  labels:
+    app: nginx-important
+  name: nginx-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-important
+  template:
+    metadata:
+      labels:
+        app: nginx-important
+    spec:
+      containers:
+      - image: nginx:1.22.1
+        name: nginx
+      - image: kubernetes/pause
+        name: pause
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nginx-important
+            topologyKey: "kubernetes.io/hostname"

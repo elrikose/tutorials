@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx-probes
+  name: nginx-probes
+  namespace: q4
+spec:
+  containers:
+  - image: nginx:1.22.1
+    name: nginx-probes
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

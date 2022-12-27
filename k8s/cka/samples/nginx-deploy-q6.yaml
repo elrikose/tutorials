@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
+  namespace: question6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:1.22.1
+        name: nginx
+        volumeMounts:
+        - mountPath: "/tmp/data"
+          name: nginx-data
+      volumes:
+      - name: nginx-data
+        persistentVolumeClaim:
+          claimName: nginx-data-pvc

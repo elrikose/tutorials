@@ -1,8 +1,16 @@
-# Kubernetes
+# Certified Kubernetes Administrator (CKA)
 
-A lot of the info on this page comes from the Kubernetes Cheatsheet: 
+See the [CKA](./cka) section for more specifics about taking the Certified Kubernetes Administrator Exam.
+
+# Kubernetes Cheatsheet
+
+Most of the info on the remainder of this page comes from the Kubernetes Cheatsheet: 
 
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+# Kubernetes Tools
+
+Tools that I have used to help 
 
 - Kubernetes Lens: https://k8slens.dev
 - K9s: https://k9scli.io
