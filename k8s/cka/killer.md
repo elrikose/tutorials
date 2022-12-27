@@ -32,14 +32,14 @@ Almost every question is relevant to my cluster except the troubleshooting where
 >Your kubeconfig has multiple contexts. Dump a column of names of all of the contexts into `/exam/1/contexts`:
 
 ```sh
-kubectl config get-contexts > /exam/1/contexts
-# Clean up the context
+kubectl config get-contexts --no-headers | awk '{ print $2 }' > /exam/1/contexts
 ```
 
 >Write a shell script that will print the **current** context into `/exam/1/kubectl_default_context.sh`
 
 ```sh
-kubectl config current-context > /exam/1/default_context.sh
+echo "kubectl config current-context" > /exam/1/default_context.sh
+chmod +x /exam/1/default_context.sh
 ```
 
 >Now do the same thing without using `kubectl`
