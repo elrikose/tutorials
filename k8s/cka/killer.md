@@ -57,17 +57,25 @@ cat ~/.kube/config | grep -i "current-context" | awk '{print $2}'
 ```sh
 kubectl create ns q2
 kubectl run nginx --image nginx:1.22.1 -n q2 --dry-run=client -o yaml > nginx-q2.yaml
+```
 
-# Edit nginx.yaml to change container name and set nodeName to control plane
+Edit nginx.yaml to change container name and set nodeName to control plane node, this overrides the default scheduler:
 
+```yaml
+  nodeName: k8s
+```
+
+Apply the pod manifest:
+
+```sh
 kubectl apply -f nginx-q2.yaml
 ```
 
 >Explain why Pods aren't scheduled on the control plane by default in `/exam/2/scheduler_reason`:
 
-Master node is tainted
+"Master node is tainted"
 
-```
+```yaml
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
   - effect: NoSchedule
@@ -84,7 +92,7 @@ kubectl create ns q3
 kubectl create deployment nginx -n q3 --image nginx --replicas=2 --dry-run=client -o yaml > nginx-q3.yaml
 kubectl apply -f nginx-q3.yaml
 
-<Wait for them both to be running>
+# <Wait for them both to be running>
 
 # Scale it down
 kubectl scale deployment nginx --replicas=1
