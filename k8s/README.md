@@ -161,6 +161,19 @@ kubectl proxy
 curl http://localhost:8080/api/
 ```
 
+Port-forward on the local host directly to a pod (5000 -> 80)
+
+```sh
+kubectl port-forward nginx --namespace app 5000:80
+```
+
+Port-forward on the local host directly to a pod (5000 -> 80) and allow all interfaces. Use this to access from outside the current machine. Useful for when the kubectl client is on the jump host OR when the cluster is on VMs on the host.
+
+```sh
+sudo ufw allow 5000
+kubectl port-forward nginx --address 0.0.0.0 5000:80
+```
+
 Port-forward on the local host to a service (8001 -> 8080)
 
 ```sh
