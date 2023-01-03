@@ -114,16 +114,22 @@ alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config curr
 alias kn='f() { [ "$1" ] && kubectl config set-context --current --namespace $1 || kubectl config view --minify | grep namespace | cut -d" " -f6 ; } ; f'
 ```
 
-Dry running is a tedious, so create an environment variable:
+Dry running is a tedious, so create an environment variable `DO` which stands for Dry-run Output:
 
 ```sh
-export DR="--dry-run=client -o yaml"
+export DO="--dry-run=client -o yaml"
 ```
 
 And then it can be added to a command:
 
 ```sh
-kubectl run --image=nginx --name my-nginx $DR
+kubectl run --image=nginx --name my-nginx $DO
+```
+
+Or dumped to a file:
+
+```sh
+kubectl run --image=nginx --name my-nginx $DO > my-nginx.yaml
 ```
 
 # Exam Focus Areas
