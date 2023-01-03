@@ -59,7 +59,7 @@ Kubernetes versions:
 - The CKA & CKAD environments are currently running etcd v3.5.
 
 Tools and aliases that are already configured on the exam system:
-- `kubectl` with k alias and Bash autocompletion
+- `kubectl` with `k` alias and Bash autocompletion
 - `jq` for YAML/JSON processing
 - `tmux` for terminal multiplexing
 - `curl` and `wget` for testing web services
@@ -133,6 +133,7 @@ Storage - 10%
 - Understand volume mode, access modes and reclaim policies for volumes
 - Understand persistent volume claims primitive
 - Know how to configure applications with persistent storage
+
 Troubleshooting - 30%
 - Evaluate cluster and node logging
 - Understand how to monitor applications
@@ -140,6 +141,7 @@ Troubleshooting - 30%
 - Troubleshoot application failure
 - Troubleshoot cluster component failure
 - Troubleshoot networking
+
 Workloads & Scheduling - 15%
 - Understand deployments and how to perform rolling update and rollbacks
 - Use ConfigMaps and Secrets to configure applications
@@ -147,6 +149,7 @@ Workloads & Scheduling - 15%
 - Understand the primitives used to create robust, self-healing, application deployments
 - Understand how resource limits can affect Pod scheduling
 - Awareness of manifest management and common templating tools
+
 Cluster Architecture, Installation & Configuration - 25%
 - Manage role based access control (RBAC)
 - Use Kubeadm to install a basic cluster
@@ -154,6 +157,7 @@ Cluster Architecture, Installation & Configuration - 25%
 - Provision underlying infrastructure to deploy a Kubernetes cluster
 - Perform a version upgrade on a Kubernetes cluster using Kubeadm
 - Implement etcd backup and restore
+
 Services & Networking - 20%
 - Understand host networking configuration on the cluster nodes
 - Understand connectivity between Pods
