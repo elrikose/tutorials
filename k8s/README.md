@@ -439,6 +439,48 @@ https://github.com/kubernetes/sample-controller
 
 Controllers generally use a kubeconfig as a command-line parameter for accessing cluster resources.
 
+# Custom Columns
+
+Use custom columns to print out reports in interesting ways.
+
+Print all of the containers with their pods:
+
+```sh
+kubectl get pods -A -o="custom-columns=NAMESPACE:metadata.namespace,POD:metadata.name,IMAGE:spec.containers[*].image"
+NAMESPACE              POD                                         IMAGE
+default                busybox-28qvh                               busybox
+default                nginx                                       nginx
+kube-flannel           kube-flannel-ds-26tgh                       docker.io/rancher/mirrored-flannelcni-flannel:v0.20.2
+kube-flannel           kube-flannel-ds-cp276                       docker.io/rancher/mirrored-flannelcni-flannel:v0.20.2
+kube-system            coredns-57575c5f89-bq969                    registry.k8s.io/coredns/coredns:v1.8.6
+kube-system            coredns-57575c5f89-pl2dp                    registry.k8s.io/coredns/coredns:v1.8.6
+kube-system            etcd-k8s                                    registry.k8s.io/etcd:3.5.6-0
+kube-system            kube-apiserver-k8s                          registry.k8s.io/kube-apiserver:v1.24.9
+kube-system            kube-controller-manager-k8s                 registry.k8s.io/kube-controller-manager:v1.24.9
+kube-system            kube-proxy-fx82t                            registry.k8s.io/kube-proxy:v1.24.9
+kube-system            kube-proxy-kbxk7                            registry.k8s.io/kube-proxy:v1.24.9
+kube-system            kube-scheduler-k8s                          registry.k8s.io/kube-scheduler:v1.24.9
+kube-system            metrics-server-5ccdd99954-skfqj             k8s.gcr.io/metrics-server/metrics-server:v0.6.2
+kubernetes-dashboard   dashboard-metrics-scraper-8c47d4b5d-kr2lm   kubernetesui/metrics-scraper:v1.0.8
+kubernetes-dashboard   kubernetes-dashboard-67bd8fc546-d6fqq       kubernetesui/dashboard:v2.7.0
+q1                     nginx                                       nginx:1.22.1
+```
+
+Add a format file (containers.fmt)
+
+```
+NAMESPACE            POD               IMAGE
+metadata.namespace   metadata.name     spec.containers[*].image
+```
+
+And it saves a bunch of typing to specify it by file name:
+
+```sh
+kubectl get pods -A -o="custom-columns-file=containers.fmt"
+```
+
+
+
 # Argo CD
 
 Install Argo CD
