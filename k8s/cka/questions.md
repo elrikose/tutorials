@@ -65,9 +65,7 @@ $ kubectl drain worker node --ignore-daemonsets
 
 - Create a NetworkPolicy which denies all ingress traffic
 
-
-```sh
-$ vim policy.yaml
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -76,17 +74,16 @@ spec:
   podSelector: {}
   policyTypes:
   - Ingress
-$ kubectl create -f policy.yaml
 ```
 
-1. Create a namespace called 'development' and a pod with image nginx called nginx on this namespace.
+1. Create a namespace called `development` and a pod with image `nginx` called nginx.
 
 ```sh
 kubectl create namespace development
 kubectl run nginx --image=nginx --restart=Never -n development
 ```
 
-2. Create a nginx pod with label env=test in engineering namespace See the solution below.
+2. Create a `nginx` pod with label `env=test` in `engineering` namespace.
 
 ```sh
 kubectl run nginx --image=nginx --restart=Never --labels=env=test --namespace=engineering --dry-run -o yaml > nginx-pod.yaml
@@ -140,7 +137,7 @@ kubectl run nginx --image=nginx --restart=Never --port=80
 kubectl expose pod nginx -n nginx-test --type=NodePort --port=80 --target-port=80
 ```
 
-5. Create a busybox pod that runs the command "env" and save the output to "envpod" file
+5. Create a busybox pod that runs the command `env` and save the output to `envpod` file
 
 ```sh
 kubectl run busybox --image=busybox --restart=Never --rm -it -- env > envpod
@@ -148,13 +145,13 @@ kubectl run busybox --image=busybox --restart=Never --rm -it -- env > envpod
 
 `--restart=Never` is required or the pod will just restart
 
-6. List pod logs named "frontend" and search for the pattern "started" and write it to a file "/opt/error-logs"
+6. List pod logs named `frontend` and search for the pattern `started` and write it to a file `/opt/error-logs`
 
 ```sh
 kubectl logs frontend | grep -i "started" > /opt/error-logs
 ```
 
-7. Create a pod that echo "hello world" and then exists. Have the pod deleted automatically when it's completed
+7. Create a pod that echo `hello world` and then exits. Have the pod deleted automatically when it's completed
 
 ```sh
 kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
@@ -196,8 +193,7 @@ kubectl get po -o=custom-columns="POD_NAME:.metadata.name, POD_STATUS:.status.co
 kubectl get pods --sort-by=.metadata.name
 ```
 
-13. Create a pod that having 3 containers in it? (Multi-Container)
-```sh image=nginx, image=redis, image=consul Name nginx container as "nginx-container" Name redis container as "redis-container" Name consul container as "consul-container" Create a pod manifest file for a container and append container section for rest of the images 
+13. Create a pod that having 3 containers in it? (Multi-Container) `image=nginx`, `image=redis`, `image=consul` name nginx container as `nginx-container` Name redis container as `redis-container` Name consul container as `consul-container` Create a pod manifest file for a container and append container section for rest of the images 
 
 ```sh
 kubectl run multi-container --generator=run-pod/v1 --image=nginx -- dry-run -o yaml > multi-container.yaml 
@@ -222,28 +218,77 @@ spec:
      name: consul-container
   restartPolicy: Always
 ```
-14. Create 2 nginx image pods in which one of them is labelled with env=prod and another one labelled with env=dev and verify the same.
-```sh kubectl run --generator=run-pod/v1 --image=nginx -- labels=env=prod nginx-prod --dry-run -o yaml > nginx-prodpod.yaml Now, edit nginx-prod-pod.yaml file and remove entries like "creationTimestamp: null" "dnsPolicy: ClusterFirst" vim nginx-prod-pod.yaml apiVersion: v1 kind: Pod metadata: labels: env: prod name: nginx-prod spec: containers: - image: nginx name: nginx-prod restartPolicy: Always # kubectl create -f nginx-prod-pod.yaml kubectl run --generator=run-pod/v1 --image=nginx -- labels=env=dev nginx-dev --dry-run -o yaml > nginx-dev-pod.yaml apiVersion: v1 kind: Pod metadata: labels: env: dev name: nginx-dev spec: containers: - image: nginx name: nginx-dev restartPolicy: Always # kubectl create -f nginx-prod-dev.yaml Verify : kubectl get po --show-labels kubectl get po -l env=prod kubectl get po -l env=dev
+14. Create 2 nginx image pods in which one of them is labelled with `env=prod` and another one labelled with `env=dev` and verify the same.
 
-15. Get IP address of the pod - "nginx-dev"
+```sh
+kubectl run --image=nginx labels=env=prod nginx-prod --dry-run -o yaml > nginx-prod.yaml
+```
+
+Now, edit nginx-prod.yaml file and remove entries like "creationTimestamp: null" "dnsPolicy: ClusterFirst"
+ 
+ ```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    env: prod
+  name: nginx-prod
+spec:
+ containers:
+  - image: nginx
+    name: nginx-prod
+    restartPolicy: Always
+```
+
+Generate nginx-dev:
+
+```sh
+kubectl run --image=nginx labels=env=dev nginx-dev --dry-run -o yaml > nginx-dev.yaml
+```
+
+Now, edit nginx-dev.yaml file and remove entries like "creationTimestamp: null" "dnsPolicy: ClusterFirst"
+ 
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    env: prod
+  name: nginx-dev
+spec:
+ containers:
+  - image: nginx
+    name: nginx-dev
+    restartPolicy: Always
+```
+
+    
+Verify:
+
+```sh
+kubectl get po -l env=prod
+kubectl get po -l env=dev
+```
+
+15. Get IP address of the pod - `nginx-dev`
 
 ```sh
 kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"t"}{.status.podIP}{""}{end}'
 ```
 
-16. Print pod name and start time to "/opt/pod-status" file
+16. Print pod name and start time to `/opt/pod-status`
 
 ```sh
 kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"t"}{.status.podIP}{""}{end}'
 ```
 
-17. Check the Image version of nginx-dev pod using jsonpath
+17. Check the Image version of `nginx-dev` pod using jsonpath
 
 ```sh
 kubectl get po nginx-dev -o jsonpath='{.spec.containers[].image}{""}'
 ```
 
-18. Create a busybox pod and add "sleep 3600" command
+18. Create a `busybox` pod and add `sleep 3600` command
 
 ```sh
 kubectl run busybox --image=busybox --restart=Never -- /bin/sh -c "sleep 3600"
@@ -284,7 +329,7 @@ kubectl get pods--sort-by=.metadata.creationTimestamp
 kubectl get pods -o=jsonpath="{.items[*]['metadata.name', 'metadata.namespace']}"
 ```
 
-24. List "nginx-dev" and "nginx-prod" pod and delete those pods
+24. List `nginx-dev` and `nginx-prod` pod and delete those pods
 
 ```sh
 kubectl get pods -o wide
@@ -298,20 +343,21 @@ kubectl delete po "nginx-prod"
 kubectl delete po "POD-NAME" --grace-period=0 -force
 ```
 
-26. Create a redis pod and expose it on port 6379
+26. Create a `redis` pod and expose it on port `6379`
 ```sh
 kubectl run redis --image=redis --restart=Never --port=6379
 
 kubectl expose pod redis --port=30000 --targetPort=6379
 ```
 
-27. Create the nginx pod with version 1.17.4 and expose it on port 80
+27. Create the `nginx` pod with version `1.17.4` and expose it on port 80
 
 ```sh
 kubectl run nginx --image=nginx:1.17.4 --restart=Never -- port=80
 ```
 
 28. Change the Image version to 1.15-alpine for the pod you just created and verify the image version is updated.
+
 ```sh
 kubectl set image pod/nginx nginx=nginx:1.15-alpine
 kubectl describe po nginx
@@ -328,7 +374,7 @@ kubectl describe po nginx
 kubectl get po nginx -w # watch it
 ```
 
-30. Create a redis pod, and have it use a non-persistent storage Note: In exam, you will have access to kubernetes.io site, Refer : https://kubernetes.io/docs/tasks/configure-pod-container/configurevolume-storage/
+30. Create a redis pod, and have it use a non-persistent storage During exam, you will have access to kubernetes.io site, Refer : https://kubernetes.io/docs/tasks/configure-pod-container/configurevolume-storage/
 
 ```yaml
 apiVersion: v1
@@ -396,7 +442,7 @@ kubectl logs busybox -c busybox-container-2
 kubectl logs busybox -c busybox-container-3
 ```
 
-33. Create a Pod with main container busybox and which executes this "while true; do echo `Hi I am from Main container' >> /var/log/index.html; sleep 5; done" and with sidecar container with nginx image which exposes on port 80. Use emptyDir Volume and mount this volume on path /var/log for busybox and on path /usr/share/nginx/html for nginx container. Verify both containers are running.
+33. Create a Pod with main container `busybox` and which executes this `while true; do echo "Hi I am from Main container'` >> /var/log/index.html; sleep 5; done" and with sidecar container with nginx image which exposes on port 80. Use emptyDir Volume and mount this volume on path /var/log for busybox and on path /usr/share/nginx/html for nginx container. Verify both containers are running.
 
 ```sh 
 # create an initial yaml file with this
@@ -438,23 +484,3 @@ spec:
 ```
 
 Create Pod  with `kubectl apply -f`
-
-34. Exec into both containers and verify that main.txt exist and
-
-```sh
-NEED TO WRITE ANSWER FOR THIS
-```
-
-35. Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod
-```sh
-kubectl run nginx --image=nginx --restart=Never --env=var1=val1
-```
-
-And then check it in any of these ways
-
-```sh
-kubectl exec -it nginx -- env 
-kubectl exec -it nginx -- sh -c 'echo $var1'
-kubectl describe po nginx | grep val1
-kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm - env
-```
