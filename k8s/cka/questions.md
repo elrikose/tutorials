@@ -22,22 +22,75 @@ $ kubectl create clusterrolebinding pvviewer-role-binding --clusterrole=pvviewer
 $ kubectl auth can-i list PersistentVolumes –as system:serviceaccount:default:pvviewer
 ```
 
-- Create a new deployment called nginx-deploy, with image nginx:1.16 and 1 replica. Record the version. Next upgrade the deployment to version 1.17 using rolling update. Make sure that the version upgrade is recorded in the resource annotation.
-
-- Create snapshot of the etcd running at https://127.0.0.1:2379. Save snapshot into /opt/etcd-snapshot.db.
-
-- Create a Persistent Volume with the given specification. Volume Name: pv-analytics, Storage: 100Mi, Access modes: ReadWriteMany, Host Path: /pv/data-analytics
-
-- Taint the worker node to be Unschedulable. Once done, create a pod called dev-redis, image redis:alpine to ensure workloads are not scheduled to this worker node. Finally, create a new pod called prod-redis and image redis:alpine with toleration to be scheduled on node01.
-
-key:env_type, value:production, operator: Equal and effect:NoSchedule
+- Create a new deployment called `nginx-deploy`, with image `nginx:1.16` and 1 replica. Record the version. Next upgrade the deployment to version 1.17 using rolling update. Make sure that the version upgrade is recorded in the resource annotation.
 
 ```sh
-$ kubectl get nodes
-$ kubectl taint node node01 env_type=production:NoSchedule
-$ kubectl describe nodes node01 | grep -i taint
-$ kubectl run dev-redis --image=redis:alpine --dyn-run=client -o yaml > pod-redis.yaml
-$ cat prod-redis.yaml
+kubectl create deploy nginx-deploy --image=nginx:1.16 --replicas=1 $DO
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx-deploy
+  name: nginx-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx-deploy
+    spec:
+      containers:
+      - image: nginx:1.16
+        name: nginx
+```
+
+Now do the rolling update:
+
+```sh
+kubectl set image deployment nginx-deploy nginx=nginx:1.16 --record
+```
+
+- Create snapshot of the etcd running at https://127.0.0.1:2379. Save snapshot into `/opt/etcd-snapshot.db`.
+
+- Create a Persistent Volume with the given specification. Volume Name: `pv-analytics`, Storage: `100Mi`, Access modes: `ReadWriteMany`, Host Path: `/pv/data-analytics`
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-analytics
+spec:
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
+  hostPath:
+    path: /pv/data-analytics
+```
+
+- Taint the worker node to be `Unschedulable`. Once done, create a pod called `dev-redis`, image `redis:alpine` to ensure workloads are not scheduled to this worker node. Finally, create a new pod called `prod-redis` and image `redis:alpine` with toleration to be scheduled on `node01`.
+
+`key: env_type`, `value: production`, `operator: Equal`, and `effect: NoSchedule`
+
+```sh
+kubectl get nodes
+kubectl taint node node01 env_type=production:NoSchedule
+kubectl describe nodes node01 | grep -i taint
+kubectl run dev-redis --image=redis:alpine --dyn-run=client -o yaml > pod-redis.yaml
+```
+
+```yaml
 apiVersion: v1 
 kind: Pod 
 metadata:
@@ -47,13 +100,11 @@ spec:
   - name:  prod-redis 
     image:  redis:alpine
   tolerations:
-  - effect: Noschedule 
+  - effect: NoSchedule 
     key: env_type 
     operator: Equal 
-    value: prodcution
-$ kubectl create -f prod-redis.yaml
+    value: production
 ```
-
 
 - Set the node named worker node as unavailable and reschedule all the pods running on it. (Drain node)
 
@@ -61,7 +112,7 @@ $ kubectl create -f prod-redis.yaml
 $ kubectl drain worker node --ignore-daemonsets
 ```
 
-- Create a Pod called non-root-pod , image: redis:alpine, runAsUser: 1000, fsGroup: 2000
+- Create a Pod called `non-root-pod`, `image: redis:alpine`, `runAsUser: 1000`, `fsGroup: 2000`
 
 - Create a NetworkPolicy which denies all ingress traffic
 
@@ -106,7 +157,7 @@ spec:
   restartPolicy: Never
 ```
 
-3. Get list of all pods in all namespaces and write it to file "/opt/pods-list.yaml"
+3. Get list of all pods in all namespaces and write it to file `/opt/pods-list.yaml`
 
 ```sh
 # Basic
