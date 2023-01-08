@@ -2,6 +2,13 @@
 
 See the [CKA](./cka) section for more specifics about taking the Certified Kubernetes Administrator Exam.
 
+# Deep Dive Concepts
+
+Certain Kubernetes resource I always mess up on conceptually, so deep dive
+
+- [ConfigMaps](configmaps.md)
+- [Secrets](secrets.md)
+
 # Kubernetes Cheatsheet
 
 Most of the info on the remainder of this page comes from the Kubernetes Cheatsheet: 
