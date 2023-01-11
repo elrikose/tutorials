@@ -11,6 +11,7 @@ Tools:
 Kubernetes Resources:
 - [ConfigMaps](configmaps.md)
 - [Secrets](secrets.md)
+- [ServiceAccounts and Users](users.md)
 
 # Kubernetes Cheatsheet
 
