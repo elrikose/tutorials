@@ -895,8 +895,6 @@ kubeadm token create --print-join-command
 # On worker run join command and uncordon
 kubeadm join ...
 kubectl uncordon node-1
-
-
 ```
 
 # Q21: NodePort Service (2%)
@@ -1038,6 +1036,32 @@ $ cat /var/lib/kubelet/pki/kubelet-client-current.pem | openssl x509 -text -noou
 > - Connect to `db1-*` pods on port 1111
 > - Connect to `db1-*` pods on port 2222
 > Use the `app` label in your policy
+
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-policy
+  namespace: q24
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: db
+      ports:
+        - protocol: TCP
+          port: 1111
+        - protocol: TCP
+          port: 2222
+```
+
 
 
 # Q25: ETCD Backup (8%)
