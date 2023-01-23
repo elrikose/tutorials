@@ -106,7 +106,6 @@ spec:
   containers:
   - image: nginx
     name: alpha 
-    resources: {}
     env:
     - name: name
       value: alpha
@@ -115,13 +114,9 @@ spec:
     - "4800"
     image: busybox
     name: beta
-    resources: {}
     env:
     - name: name
       value: beta
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
-status: {}
 ```
 
 4. Create a Pod called `non-root-pod` , image: `redis:alpine`
@@ -129,28 +124,21 @@ status: {}
 runAsUser: 1000
 fsGroup: 2000
 ```
-- Pod non-root-pod fsGroup configured
-- Pod non-root-pod runAsUser configured
+- Pod `non-root-pod` fsGroup configured
+- Pod `non-root-pod` runAsUser configured
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  creationTimestamp: null
-  labels:
-    run: non-root-pod
   name: non-root-pod
 spec:
   containers:
   - image: redis:alpine
     name: non-root-pod
-    resources: {}
   securityContext:
     runAsUser: 1000
     fsGroup: 2000
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
-status: {}
 ```
 
 5. We have deployed a new pod called `np-test-1` and a service called `np-test-service`. Incoming connections to this service are not working. Troubleshoot and fix it.
@@ -221,9 +209,9 @@ spec:
 
 6. Taint the worker node `node01` to be `Unschedulable`. Once done, create a pod called `dev-redis`, image `redis:alpine`, to ensure workloads are not scheduled to this worker node. Finally, create a new pod called `prod-redis` and image: `redis:alpine` with toleration to be scheduled on node01.
 key: `env_type`, value: `production`, operator: `Equal` and effect: `NoSchedule`
-- Key = env_type
-- Value = production
-- Effect = NoSchedule
+- Key = `env_type`
+- Value = `production`
+- Effect = `NoSchedule`
 - pod 'dev-redis' (no tolerations) is not scheduled on node01?
 Create a pod 'prod-redis' to run on node01
 
@@ -232,13 +220,14 @@ Create a pod 'prod-redis' to run on node01
 7. Create a pod called `hr-pod` in `hr` namespace belonging to the `production` environment and `frontend` tier .
 image: `redis:alpine`
 Use appropriate labels and create all the required objects if it does not exist in the system already.
-- hr-pod labeled with environment production?
-- hr-pod labeled with tier frontend?
+- `hr-pod` labeled with environment production?
+- `hr-pod` labeled with tier frontend?
 
 ```sh
-Create a namespace if it doesn't exist:
+# Create a namespace if it doesn't exist:
 kubectl create namespace hr
-and then create a hr-pod with given details:
+
+# and then create a hr-pod with given details:
 kubectl run hr-pod --image=redis:alpine --namespace=hr --labels=environment=production,tier=frontend
 ```
 
