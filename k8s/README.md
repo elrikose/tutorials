@@ -9,9 +9,10 @@ Tools:
 - [Tools](tools.md) - Lens, k9s, kubectx
 
 Kubernetes Resources:
-- [ConfigMaps](configmaps.md)
-- [Secrets](secrets.md)
-- [ServiceAccounts and Users](users.md)
+- [ConfigMaps](./cka/topics/configmaps.md)
+- [NetworkPolicy](./cka/topics/networkpolicy.md)
+- [Secrets](./cka/topics/secrets.md)
+- [ServiceAccounts and Users](./cka/topics/users.md)
 
 # Kubernetes Cheatsheet
 

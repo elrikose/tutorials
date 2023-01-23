@@ -92,19 +92,30 @@ During the test you can only use the Kubernetes documentation at [kubernetes.io]
 - Cheat Sheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 # Shortcuts
+
 There are a number of helpful commands in the [Kubectl cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/):
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 As stated above, `kubectl` alias and bash completion should be enabled by default. However, commands can often be tedious to type and slow down an already time-constrained exam. I plan to add the following to my `.bashrc`:
 
 ```sh
-alias kn="kubectl get nodes -o wide"
-alias kp="kubectl get pods -o wide"
-alias kd="kubectl get deployment -o wide"
-alias ks="kubectl get svc -o wide"
-alias kdp="kubectl describe pod"
-alias kdd="kubectl describe deployment"
+# Dry-run Output
+export DO="--dry-run=client -o yaml"
+
+# Copied right from the cheat sheet
+alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'
+alias kn='f() { [ "$1" ] && kubectl config set-context --current --namespace $1 || kubectl config view --minify | grep namespace | cut -d" " -f6 ; } ; f'
+
+# Use often
+alias ka="kubectl apply -f"
+
+alias kgn="kubectl get nodes -o wide"
+alias kgp="kubectl get pods -o wide"
+alias kgs="kubectl get svc -o wide"
+alias kga="kubectl get all -A"
+
+alias kdn="kubectl describe nodes"
+alias kdp="kubectl describe pods"
 alias kds="kubectl describe svc"
-alias kdn="kubectl describe node"
 ```
 
 For switching contexts and namespaces, these aliases from the cheat sheet are very handy:
@@ -150,7 +161,7 @@ Troubleshooting - 30%
 
 Workloads & Scheduling - 15%
 - Understand deployments and how to perform rolling update and rollbacks
-- Use ConfigMaps and Secrets to configure applications
+- Use [ConfigMaps](./topics/configmaps.md) and [Secrets](./topics/secrets.md) to configure applications
 - Know how to scale applications
 - Understand the primitives used to create robust, self-healing, application deployments
 - Understand how resource limits can affect Pod scheduling
@@ -158,7 +169,7 @@ Workloads & Scheduling - 15%
 
 Cluster Architecture, Installation & Configuration - 25%
 - Manage role based access control (RBAC)
-- Use Kubeadm to install a basic cluster
+- Use Kubeadm to install/upgrade a basic cluster ([example](./topics/upgrade.md))
 - Manage a highly-available Kubernetes cluster
 - Provision underlying infrastructure to deploy a Kubernetes cluster
 - Perform a version upgrade on a Kubernetes cluster using Kubeadm
@@ -171,80 +182,3 @@ Services & Networking - 20%
  - Know how to use Ingress controllers and Ingress resources
  - Know how to configure and use CoreDNS
  - Choose an appropriate container network interface plugin
-
- # Kubeadm upgrade
-
- Upgrade nodes one at a time. You must drain the worker node `kubectl drain --ignore-daemonsets` and make them unscheduleable. After an upgrade call `kubectl uncordon <node>` to make it schedulable again. 
-
- ## Control Node
-
- Update the package lists from the software repository.
-
- ```sh
- sudo apt-get update
- ```
-
- To get the list of kubeadm's to upgrade to (Debian):
-
- ```sh
- sudo apt list -a kubeadm
- ```
-
- This will install the kubeadm version 1.26.0.
-
- ```sh
- sudo apt install kubeadm=1.26.0-00
- ```
-
- First plan the upgrade to get the list of versions the took can upgrade to as well as the remote versions:
-
- ```
- kubeadm upgrade plan
- ```
-
- Then you upgrade the control plane
-
- ```sh
- kubeadm upgrade apply v1.26.0
- ```
-
- And then you upgrade the kubelet:
-
- ```
- sudo apt install kubelet=1.26.0-00
- ```
-
- ## Worker Node
-
- You can't just update the kubelet and be done on a worker node. `kubeadm upgrade node` must be called for the cluster to recognize the version in the API server.
-
- Update the package lists from the software repository.
-
- ```sh
- sudo apt-get update
- ```
-
- Install the kubeadm version 1.26.0.
-
- ```sh
- sudo apt install kubeadm=1.26.0-00
- ```
-
- Upgrade the node:
-
- ```sh
- kubeadm upgrade node
- ```
-
- Now that the node is upgrade, it is time to update the kubelet with the version 1.26.0. This should restart the service, but I have seen it drop warnings to the console:
-
- ```sh
- sudo apt install kubelet=1.26.0-00 
- ```
-
- You may need to reload the daemon and restart kubelet service after it has been upgraded.
-
- ```sh
- systemctl daemon-reload
- systemctl restart kubelet
- ```
