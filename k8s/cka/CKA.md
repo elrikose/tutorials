@@ -114,14 +114,50 @@ alias kaf="kubectl apply -f"
 # Delete resource quickly
 alias kd="kubectl delete --grace-period=0 --force"
 
-alias kgn="kubectl get nodes -o wide"
-alias kgp="kubectl get pods -o wide"
-alias kgs="kubectl get svc -o wide"
-alias kga="kubectl get all -A"
+# Get resources
+alias kgn="kubectl get nodes"
+alias kgp="kubectl get pods"
+alias kgd="kubectl get deployment"
+alias kgs="kubectl get svc"
+alias kga="kubectl get all"
+alias kgaa="kubectl get all -A"
 
-alias kdn="kubectl describe nodes"
-alias kdp="kubectl describe pods"
+# Describe resources
+alias kdn="kubectl describe node"
+alias kdp="kubectl describe pod"
+alias kdd="kubectl describe deployment"
 alias kds="kubectl describe svc"
+
+# Delete fast
+alias kd="kubectl delete --grace-period=0 --force"
+```
+
+Completing aliases can also be handy for certain things that require resources. Here is how you do it in Bash for the test:
+
+```sh
+complete -F __start_kubectl kgn
+complete -F __start_kubectl kgp
+complete -F __start_kubectl kgd
+complete -F __start_kubectl kgs
+complete -F __start_kubectl kdn
+complete -F __start_kubectl kdp
+complete -F __start_kubectl kdd
+complete -F __start_kubectl kds
+complete -F __start_kubectl kd
+```
+
+And here is Zsh:
+
+```sh
+compdef __start_kubectl kgn
+compdef __start_kubectl kgp
+compdef __start_kubectl kgd
+compdef __start_kubectl kgs
+compdef __start_kubectl kdn
+compdef __start_kubectl kdp
+compdef __start_kubectl kdd
+compdef __start_kubectl kds
+compdef __start_kubectl kd
 ```
 
 For switching contexts and namespaces, these aliases from the cheat sheet are very handy to switch contexts and namespaces:
