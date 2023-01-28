@@ -127,9 +127,6 @@ alias kdn="kubectl describe node"
 alias kdp="kubectl describe pod"
 alias kdd="kubectl describe deployment"
 alias kds="kubectl describe svc"
-
-# Delete fast
-alias kd="kubectl delete --grace-period=0 --force"
 ```
 
 Completing aliases can also be handy for certain things that require resources. Here is how you do it in Bash for the test:
