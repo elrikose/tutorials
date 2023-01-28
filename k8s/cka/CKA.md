@@ -101,12 +101,18 @@ As stated above, `kubectl` alias and bash completion should be enabled by defaul
 # Dry-run Output
 export DO="--dry-run=client -o yaml"
 
+# Make it simple to look at what we have done 
+alias h=history
+
 # Copied right from the cheat sheet
 alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'
 alias kn='f() { [ "$1" ] && kubectl config set-context --current --namespace $1 || kubectl config view --minify | grep namespace | cut -d" " -f6 ; } ; f'
 
 # Use often
-alias ka="kubectl apply -f"
+alias kaf="kubectl apply -f"
+
+# Delete resource quickly
+alias kd="kubectl delete --grace-period=0 --force"
 
 alias kgn="kubectl get nodes -o wide"
 alias kgp="kubectl get pods -o wide"
@@ -118,7 +124,7 @@ alias kdp="kubectl describe pods"
 alias kds="kubectl describe svc"
 ```
 
-For switching contexts and namespaces, these aliases from the cheat sheet are very handy:
+For switching contexts and namespaces, these aliases from the cheat sheet are very handy to switch contexts and namespaces:
 
 ```sh
 alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'
