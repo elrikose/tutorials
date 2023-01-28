@@ -113,6 +113,137 @@ k auth can-i list secrets --as system:serviceaccount:ns2:pipeline -A # NO (defau
 
 # User / Role / RoleBindings
 
+There is existing Namespace `applications` .
+
+User `smoke` should be allowed to `create` and `delete` `Pods, Deployments and StatefulSets` in Namespace `applications`.
+User `smoke` should have view permissions (like the permissions of the default ClusterRole named view ) in all Namespaces but not in `kube-system` .
+Verify everything using `kubectl auth can-i` .
+
+Verify all namespaces:
+
+```sh
+$ k get ns
+NAME              STATUS   AGE
+applications      Active   2m22s
+default           Active   2d3h
+kube-node-lease   Active   2d3h
+kube-public       Active   2d3h
+kube-system       Active   2d3h
+```
+
+First change to the namespace: 
+
+```sh
+$ kn applications
+Context "kubernetes-admin@kubernetes" modified.
+```
+
+Now create a role and role binding for editing
+
+```sh
+kubectl create role $DO smoke-edit -n applications --verb=create,delete --resource=deployments,statefulsets,pods > smoke-edit-role.yaml
+kubectl create rolebinding $DO smoke-edit-rb -n applications --user smoke --role smoke-edit > smoke-edit-rb.yaml
+```
+
+And then create the rolebinding for the ClusterRole view and append the other role bindings:
+
+```sh
+$ k create rolebinding $DO smoke-view-app-rb -n applications --clusterrole view --user smoke > smoke-view.yaml
+$ create rolebinding $DO smoke-view-default-rb -n default --clusterrole view --user smoke >> smoke-view.yaml
+$ k create rolebinding $DO smoke-view-kp-rb -n kube-public --clusterrole view --user smoke >> smoke-view.yaml
+$ k create rolebinding $DO smoke-view-knl-rb -n kube-node-lease --clusterrole view --user smoke >> smoke-view.yaml
+
+# Add yaml seperators in the file and apply it
+$ kubectl apply -f smoke-view.yaml
+rolebinding.rbac.authorization.k8s.io/smoke-view-app-rb configured
+rolebinding.rbac.authorization.k8s.io/smoke-view-default-rb configured
+rolebinding.rbac.authorization.k8s.io/smoke-view-kp-rb configured
+rolebinding.rbac.authorization.k8s.io/smoke-view-knl-rb created
+```
+
+Now run some tests:
+
+```sh
+# applications
+k auth can-i create deployments --as smoke -n applications # YES
+k auth can-i delete deployments --as smoke -n applications # YES
+k auth can-i delete pods --as smoke -n applications # YES
+k auth can-i delete sts --as smoke -n applications # YES
+k auth can-i delete secrets --as smoke -n applications # NO
+k auth can-i list deployments --as smoke -n applications # YES
+k auth can-i list secrets --as smoke -n applications # NO
+k auth can-i get secrets --as smoke -n applications # NO
+
+# view in all namespaces but not kube-system
+k auth can-i list pods --as smoke -n default # YES
+k auth can-i list pods --as smoke -n applications # YES
+k auth can-i list pods --as smoke -n kube-public # YES
+k auth can-i list pods --as smoke -n kube-node-lease # YES
+k auth can-i list pods --as smoke -n kube-system # NO
+```
 
 
 # Scheduler Priority
+
+Find the Pod with the highest priority in Namespace `management` and delete it.
+
+```sh
+kubectl get pod -n management
+```
+
+```sh
+$ kgp -n management -o=custom-columns="NAME:.metadata.name,PRIORITY:.spec.priority"
+NAME       PRIORITY
+runner     200000000
+sprinter   300000000
+
+$ k delete pod -n management sprinter --grace-period=0 --force
+pod "sprinter" deleted
+```
+
+In Namespace `lion` there is one existing Pod which requests `1Gi` of memory resources. That Pod has a specific priority because of its PriorityClass. Create new Pod named important of image `nginx:1.21.6-alpine` in the same Namespace. It should request `1Gi` memory resources Assign a higher priority to the new Pod so it's scheduled instead of the existing one.
+
+Both Pods won't fit in the cluster.
+
+```sh
+$ k get pod 4d37006c -o yaml | grep priority
+  priority: 200000000
+  priorityClassName: level2
+
+ $ k get priorityclass        
+NAME                      VALUE        GLOBAL-DEFAULT   AGE
+level2                    200000000    false            10m
+level3                    300000000    false            10m
+system-cluster-critical   2000000000   false            2d3h
+system-node-critical      2000001000   false            2d3h
+```
+
+Use a priority class of `level3` instead of `level2`:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: important
+  namespace: lion
+spec:
+  containers:
+  - image: nginx:1.21.6-alpine
+    name: nginx
+    resources:
+      requests:
+        memory: 1Gi
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  priorityClassName: level3
+```
+
+```sh
+$ kaf important.yaml 
+pod/important created
+
+ $ k get pod
+NAME        READY   STATUS    RESTARTS   AGE
+important   1/1     Running   0          3s
+```
