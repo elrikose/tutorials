@@ -49,6 +49,70 @@ If the `yaml` is all busted it will look like this in `/var/log/syslog` when you
 Jan 22 02:14:10 controlplane kubelet[24118]: E0122 02:14:10.672832   24118 file.go:187] "Could not process manifest file" err="/etc/kubernetes/manifests/kube-apiserver.yaml: couldn't parse as pod(yaml: line 2: mapping values are not allowed in this context), please check config file" path="/etc/kubernetes/manifests/kube-apiserver.yaml"
 ```
 
+# Config Maps
+
+- Create a ConfigMap named `trauerweide` with content tree=trauerweide
+- Create the ConfigMap stored in existing file `/root/cm.yaml`
+
+```sh
+kdo create cm trauerweide --from-literal tree=trauerweide > tree.yaml
+kaf /root/cm.yaml
+```
+
+```sh
+kdo create cm trauerweide --from-literal tree=trauerweide > tree.yaml
+kaf tree.yaml
+configmap/trauerweide created
+```
+
+Make the pod via a `kubectl run`:
+
+```sh
+kdo run pod1 --image nginx:alpine > pod1.yaml
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: pod1
+  name: pod1
+spec:
+  containers:
+  - image: nginx:alpine
+    name: pod1
+    resources: {}
+    env:
+    - name: TREE1
+      valueFrom:
+        configMapKeyRef:
+          name: trauerweide           # The ConfigMap this value comes from.
+          key: tree
+    volumeMounts:
+    - name: birke
+      mountPath: "/etc/birke"
+  volumes:
+  - name: birke
+    configMap:
+      name: birke
+```
+
+Now validate the `pod1` has the environment and the files in place:
+
+```sh
+$ k exec pod1 -it -- /bin/sh
+# env | grep TR
+TREE1=trauerweide
+# ls -l /etc/birke
+total 0
+lrwxrwxrwx    1 root     root            17 Jan 29 01:45 department -> ..data/department
+lrwxrwxrwx    1 root     root            12 Jan 29 01:45 level -> ..data/level
+lrwxrwxrwx    1 root     root            11 Jan 29 01:45 tree -> ..data/tree
+```
+
+
 # ServiceAccount / Role / RoleBindings
 
 There are existing Namespaces `ns1` and `ns2`. Create ServiceAccount `pipeline` in both Namespaces.
