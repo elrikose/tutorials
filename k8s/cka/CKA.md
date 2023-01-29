@@ -95,66 +95,43 @@ During the test you can only use the Kubernetes documentation at [kubernetes.io]
 
 There are a number of helpful commands in the [Kubectl cheat sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/):
 https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-As stated above, `kubectl` alias and bash completion should be enabled by default. However, commands can often be tedious to type and slow down an already time-constrained exam. I plan to add the following to my `.bashrc`:
+As stated above, `kubectl` alias and bash completion should be enabled by default. However, commands can often be tedious to type and slow down an already time-constrained exam. After a lot of trial and error, timing how long it would take to add all of these to a `.bashrc` file, I plan to add the following:
 
 ```sh
-# Dry-run Output
-export DO="--dry-run=client -o yaml"
-
 # Make it simple to look at what we have done 
 alias h=history
+
+# Apply files
+alias kaf='kubectl apply -f'
+# Dry-run output
+alias kdo='kubectl --dry-run=client -o yaml'
+# Get/Describe resources
+alias kg='kubectl get'
+alias kd='kubectl describe'
+# Delete resource quickly
+alias kdel='kubectl delete --grace-period=0 --force'
 
 # Copied right from the cheat sheet
 alias kx='f() { [ "$1" ] && kubectl config use-context $1 || kubectl config current-context ; } ; f'
 alias kn='f() { [ "$1" ] && kubectl config set-context --current --namespace $1 || kubectl config view --minify | grep namespace | cut -d" " -f6 ; } ; f'
-
-# Apply files
-alias kaf="kubectl apply -f"
-
-# Delete resource quickly
-alias kd="kubectl delete --grace-period=0 --force"
-
-# Get resources
-alias kgn="kubectl get nodes"
-alias kgp="kubectl get pods"
-alias kgd="kubectl get deployment"
-alias kgs="kubectl get svc"
-alias kga="kubectl get all"
-alias kgaa="kubectl get all -A"
-
-# Describe resources
-alias kdn="kubectl describe node"
-alias kdp="kubectl describe pod"
-alias kdd="kubectl describe deployment"
-alias kds="kubectl describe svc"
 ```
 
 Completing aliases can also be handy for certain things that require resources. Here is how you do it in Bash for the test:
 
 ```sh
-complete -F __start_kubectl kgn
-complete -F __start_kubectl kgp
-complete -F __start_kubectl kgd
-complete -F __start_kubectl kgs
-complete -F __start_kubectl kdn
-complete -F __start_kubectl kdp
-complete -F __start_kubectl kdd
-complete -F __start_kubectl kds
+complete -F __start_kubectl kdo
+complete -F __start_kubectl kg
 complete -F __start_kubectl kd
+complete -F __start_kubectl kdel
 ```
 
 And here is Zsh:
 
 ```sh
-compdef __start_kubectl kgn
-compdef __start_kubectl kgp
-compdef __start_kubectl kgd
-compdef __start_kubectl kgs
-compdef __start_kubectl kdn
-compdef __start_kubectl kdp
-compdef __start_kubectl kdd
-compdef __start_kubectl kds
+compdef __start_kubectl kdo
+compdef __start_kubectl kg
 compdef __start_kubectl kd
+compdef __start_kubectl kdel
 ```
 
 For switching contexts and namespaces, these aliases from the cheat sheet are very handy to switch contexts and namespaces:
