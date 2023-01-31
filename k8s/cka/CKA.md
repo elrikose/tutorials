@@ -104,7 +104,8 @@ alias h=history
 # Apply files
 alias kaf='kubectl apply -f'
 # Dry-run output
-alias kdo='kubectl --dry-run=client -o yaml'
+export DO="--dry-run=client -o yaml"
+alias kdo='kubectl $DO'
 # Get/Describe resources
 alias kg='kubectl get'
 alias kd='kubectl describe'
