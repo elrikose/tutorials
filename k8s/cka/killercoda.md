@@ -112,6 +112,58 @@ lrwxrwxrwx    1 root     root            12 Jan 29 01:45 level -> ..data/level
 lrwxrwxrwx    1 root     root            11 Jan 29 01:45 tree -> ..data/tree
 ```
 
+# Ingress Create
+
+There are two existing Deployments in Namespace `world` which should be made accessible via an Ingress.
+
+First: create ClusterIP Services for both Deployments for port 80 . The Services should have the same name as the Deployments.
+
+```sh
+k expose deployment asia --port 80
+k expose deployment europe --port 80
+```
+
+Create a new Ingress resource called world for domain name `world.universe.mine`. The domain points to the K8s Node IP via `/etc/hosts` .The Ingress resource should have two routes pointing to the existing Services:
+
+http://world.universe.mine:30080/europe/
+
+and
+
+http://world.universe.mine:30080/asia/
+
+Don't forget the IngressClass name. That is what points the ingress to the right controller running in the cluster. In this example `ingressClassName: nginx` should be used since it is the only one found.
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: world
+  namespace: world
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "world.universe.mine"
+    http:
+      paths:
+      - path: /europe
+        pathType: Prefix
+        backend:
+          service:
+            name: europe
+            port:
+              number: 80
+      - path: /asia
+        pathType: Prefix
+        backend:
+          service:
+            name: asia
+            port:
+              number: 80
+```
+
+
 
 # ServiceAccount / Role / RoleBindings
 
