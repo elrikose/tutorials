@@ -101,7 +101,7 @@ kubectl scale deployment nginx --replicas=1
 >Now do the same for a running stateful set named `nginx-ss` in `q3`:
 
 ```sh
-kubectl scale nginx-ss -n q3 --replicas=1
+kubectl scale statefulset nginx-ss -n q3 --replicas=1
 ```
 
 ## Q4: Liveness and Readiness Probes
@@ -1008,7 +1008,7 @@ chmod +x /exam/22/renewcerts.sh
 > - kubelet server certificate - incoming from api server
 > Write the information to `/exam/23/cert-info.txt`
 
-Client found in `/etc/kubernetes/kubelet.conf`:
+Client path found in `/etc/kubernetes/kubelet.conf`:
 
 ```sh
 $ cat /var/lib/kubelet/pki/kubelet-client-current.pem | openssl x509 -text -noout

@@ -525,7 +525,7 @@ Restore the backup to a new etcd data dir
 mkdir /var/lib/etcd-restore-location
 
 export ETCDCTL_API=3
-etcdclt snapshot restore --data-dir /var/lib/etcd-restore-location /home/user/etcd_backup.db
+etcdctl snapshot restore --data-dir /var/lib/etcd-restore-location /home/user/etcd_backup.db
 ```
 
 And then edit the static manifest for etcd:

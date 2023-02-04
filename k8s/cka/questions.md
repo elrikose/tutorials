@@ -304,7 +304,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    env: prod
+    env: dev
   name: nginx-dev
 spec:
  containers:
@@ -324,7 +324,7 @@ kubectl get po -l env=dev
 15. Get IP address of the pod - `nginx-dev`
 
 ```sh
-kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"t"}{.status.podIP}{""}{end}'
+kubectl get pod nginx-dev -o=jsonpath='{.metadata.name}{"\t"}{.status.podIP}{"\n"}'
 ```
 
 16. Print pod name and start time to `/opt/pod-status`
