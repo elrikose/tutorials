@@ -330,7 +330,7 @@ kubectl get pod nginx-dev -o=jsonpath='{.metadata.name}{"\t"}{.status.podIP}{"\n
 16. Print pod name and start time to `/opt/pod-status`
 
 ```sh
-kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"t"}{.status.podIP}{""}{end}'
+kubectl get pods -o=jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.startTime}{"\n"}{end}'
 ```
 
 17. Check the Image version of `nginx-dev` pod using jsonpath
@@ -391,7 +391,7 @@ kubectl delete po "nginx-prod"
 25. Delete the pod without any delay (force delete)
 
 ```sh
-kubectl delete po "POD-NAME" --grace-period=0 -force
+kubectl delete po "POD-NAME" --grace-period=0 --force
 ```
 
 26. Create a `redis` pod and expose it on port `6379`
@@ -404,7 +404,7 @@ kubectl expose pod redis --port=30000 --targetPort=6379
 27. Create the `nginx` pod with version `1.17.4` and expose it on port 80
 
 ```sh
-kubectl run nginx --image=nginx:1.17.4 --restart=Never -- port=80
+kubectl run nginx --image=nginx:1.17.4 --restart=Never --port=80
 ```
 
 28. Change the Image version to 1.15-alpine for the pod you just created and verify the image version is updated.
@@ -493,7 +493,7 @@ kubectl logs busybox -c busybox-container-2
 kubectl logs busybox -c busybox-container-3
 ```
 
-33. Create a Pod with main container `busybox` and which executes this `while true; do echo "Hi I am from Main container'` >> /var/log/index.html; sleep 5; done" and with sidecar container with nginx image which exposes on port 80. Use emptyDir Volume and mount this volume on path /var/log for busybox and on path /usr/share/nginx/html for nginx container. Verify both containers are running.
+33. Create a Pod with main container `busybox` and which executes this `while true; do echo "Hi I am from Main container" >> /var/log/index.html; sleep 5; done` and with sidecar container with `nginx` image which exposes on port 80. Use emptyDir Volume and mount this volume on path `/var/log` for busybox and on path `/usr/share/nginx/html` for nginx container. Verify both containers are running.
 
 ```sh 
 # create an initial yaml file with this

@@ -52,17 +52,21 @@ cat ~/.kube/config | grep -i "current-context" | awk '{print $2}'
 
 ## Q2: Pod Creation (3%)
 
->Create a pod with image `nginx:1.22.1` in namespace `q2` with a pod name of `nginx` and a container name of `nginx-container`. It must only be scheduled on the master node.
+>Create a pod with image `nginx:1.22.1` in namespace `q2` with a pod name of `nginx-pod` and a container name of `nginx-container`. It must only be scheduled on the master node.
 
 ```sh
 kubectl create ns q2
-kubectl run nginx --image nginx:1.22.1 -n q2 --dry-run=client -o yaml > nginx-q2.yaml
+kubectl run nginx-pod --image nginx:1.22.1 -n q2 --dry-run=client -o yaml > nginx-q2.yaml
 ```
 
 Edit nginx.yaml to change container name and set nodeName to control plane node, this overrides the default scheduler:
 
 ```yaml
   nodeName: k8s
+...
+  cointainers:
+  - image: nginx:1.22.1
+    name: nginx-container
 ```
 
 Apply the pod manifest:
@@ -203,7 +207,7 @@ chmod -x pods_by_date.sh
 kubectl get pods -A --sort-by .metadata.creationTimestamp
 
 cat << EOF > /exam/5/pods_by_uid.sh
-kubectl get pods -A --sort-by .metadata.creationTimestamp
+kubectl get pods -A --sort-by .metadata.uid
 EOF
 chmod -x pods_by_uid.sh
 ```
