@@ -11,3 +11,4 @@ Mumshad's Course:
 
 - [CKA Mock Exam #2](./CKA-MockExam-2.md)
 - [CKA Mock Exam #3](./CKA-MockExam-2.md)
+- [CKA Lightning Lab](./CKA-LightningLab.md)
