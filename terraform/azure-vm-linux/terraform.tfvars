@@ -1,0 +1,5 @@
+# Azure credentials
+azure_subscription_id = ""
+azure_tenant_id       = ""
+azure_client_id       = ""
+azure_client_secret   = ""
