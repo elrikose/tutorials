@@ -9,3 +9,12 @@ Main Actions:
 - `terraform apply` - apply the infrastructure. Use `-auto-approve` to not be prompted.
 - `terraform destroy` - destroy the infrastructure
 
+Get a list of terraform providers in the local folder:
+
+```sh
+$ terraform providers
+
+Providers required by configuration:
+.
+└── provider[registry.terraform.io/hashicorp/azurerm] 3.64.0
+``
