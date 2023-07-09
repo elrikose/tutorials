@@ -7,15 +7,22 @@
 - Providers often wrap cloud APIs
 - There is a [Terraform Associate](https://developer.hashicorp.com/terraform/tutorials/certification-003) certification, but currently no professional
 
+# Topics
+
+- [Terraform Providers](./Providers.md) - Provides shared logic such as modules
+- [Terraform Provisioners](./Provisioners.md) - Provision infrastructure after it is built
+
+
 # Projects
 
 - [Azure Linux VM](./azure-vm-linux/) - Create an Azure Linux VM
+
+
 # References
 
 Terraform
 - [Terraform](https://www.terraform.io/)
 - [Terraform Registry](https://registry.terraform.io/) - providers, modules
-- [Terraform Azure Examples](https://github.com/cloudxeus/terraform-azure)
 
 Providers
 - [AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/latest)
@@ -23,20 +30,12 @@ Providers
 - [GCP Provider](https://registry.terraform.io/providers/hashicorp/google/latest)
 - [Kubernetes Provider](https://registry.terraform.io/providers/hashicorp/kubernetes/latest)
 
+Azure Specific
+- [Terraform Azure Examples](https://github.com/cloudxeus/terraform-azure)
+- [Azure Infrastructure with Terraform](https://www.youtube.com/playlist?list=PLLc2nQDXYMHowSZ4Lkq2jnZ0gsJL3ArAw)
+
 Certification
 - [Terraform Certification from freeCodeCamp](https://www.youtube.com/watch?v=V4waklkBC38)
 - [ExamPro Certification Course](https://www.exampro.co/terraform)
 
-# CLI
-
-Main Actions
-
-- `terraform init` - initialize the project. Get latest providers and modules
-- `terraform fmt` - format the source code in an opinionated way
-- `terraform validate` - validate types and values. required attributes are present in code
-- `terraform plan` - create an execution plan
-- `terraform apply` - apply the infrastructure. Use `-auto-approve` to not be prompted.
-- `terraform destroy` - destroy the infrastructure
-
-# Terraform Provisioners
 
