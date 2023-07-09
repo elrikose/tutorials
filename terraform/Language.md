@@ -103,3 +103,14 @@ data "data_type" "variable_name" {
 }
 ```
 
+# Resource Arguments
+
+A way to change the behavior of a Terraform resource:
+
+- depends_on - define dependencies explicitly
+- count - create multiple instances of a resource
+- for_each - create multiple instances based on a map of strings
+- provider - non-default provider configurations
+- lifecycle - customize the lifecycle of the resource
+- provisioner - launch actions after resource creation
+
