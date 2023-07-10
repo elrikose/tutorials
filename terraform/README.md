@@ -12,6 +12,7 @@
 - [Terraform Providers](./Providers.md) - Provides shared logic such as modules
 - [Terraform Provisioners](./Provisioners.md) - Provision infrastructure after it is built
 - [Terraform Language](./Language.md) - Language topics (eg. variables, data)
+- [Terraform Expressions](./Expressions.md) - Using expressions
 
 # Projects
 
