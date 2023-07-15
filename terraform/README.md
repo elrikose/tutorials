@@ -14,6 +14,7 @@
 - [Terraform Language](./Language.md) - Language topics (eg. variables, data)
 - [Terraform Expressions](./Expressions.md) - Using expressions
 - [Terraform State](./State.md) - Using expressions
+- [Infrastructure Drift](./InfrastructureDrift.md) - When remote resources drift from your terraform state
 
 # Projects
 
