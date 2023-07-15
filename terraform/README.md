@@ -16,6 +16,8 @@
 - [Terraform State](./State.md) - Using expressions
 - [Infrastructure Drift](./InfrastructureDrift.md) - When remote resources drift from your terraform state
 
+- [Troubleshooting](./Troubleshooting.md)
+
 # Projects
 
 - [Azure Linux VM](./azure-vm-linux/) - Create an Azure Linux VM
