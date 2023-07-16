@@ -18,6 +18,7 @@
 - [Terraform Modules](./Modules.md) - Shared code for Terraform
 - [Terraform Backends](./Backends.md) - State and operation backends
 
+- [Terraform Cloud](./Cloud.md) - Terraform Cloud
 
 - [Troubleshooting](./Troubleshooting.md)
 
