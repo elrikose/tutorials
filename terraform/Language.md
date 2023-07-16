@@ -114,3 +114,91 @@ A way to change the behavior of a Terraform resource:
 - lifecycle - customize the lifecycle of the resource
 - provisioner - launch actions after resource creation
 
+# Collection Types
+
+Three types of collections
+
+- list
+- map
+- set
+
+List referencing
+
+```js
+variable "friends" {
+  type list
+  default = ["tom", "fred", "larry"]
+}
+friend = var.friends[0]
+```
+
+Map referencing
+
+```js
+variable "friends" {
+  type map
+  default = {
+    "best friend" = "tom",
+    "next best friend" = "fred",
+    "least best friend" = "ned"]
+}
+friend = var.friends["best friend"]
+```
+
+Set is similar to a list, but must be the same type
+
+# Structural Type
+
+You can define a structured variable with an `object()` function that is set to type:
+
+```js
+variable "my_object" {
+  type = object({
+    instance_name = string
+    instance_tag = optional(list)
+  })
+```
+
+Tuples are used for returning multiple return values.
+
+# Built-in Functions
+
+Terraform includes functions to help transform and combine data into expressions
+
+- Numeric - `abs()`, `floor()`, `ceil()`, `min()`, `max()`
+- String - `chomp()`, `format()`, `indent()`, `join()`, `split()`, `lower()`, `regex()`, `replace()`, `substr()`, `trim()`
+- Collection - `compact()`, `concat()`, `contains()`, `keys()/values()`, `length()`, `lookup()`, `merge()`, `sort()`
+- Encoding - `base64encode()`, `base64decode()`, `urlencode()`
+- Filesystem - `abspath()`, `dirname()\basename()`, `pathexpand()`, `file()`, `fileexists()`
+- Date/Time - `formatdate()`, `timestamp()`
+- Networking - `cidrhost()`, `cidrnetmask()`, `cidrsubnet()`
+- Type Conversions - `can()`, `defaults()`, `tobool()`, `tomap()`, `tolist()`
+
+Numeric Standouts:
+- `parseint("FF", 16)` - converts a hex number string to int - 255
+- `parseint("1010", 2)` - converts binary number string to int - 10
+
+String Standouts
+- `chomp("Yo Dawg\n\n")` - eats newline characters at end
+- `format("Yo %s", "Dawg")` - formats a string
+- `join(" ", [ "string1", "string2" ])` - joins a list of strings with first parameter - `"string1 string2"`
+- `lower("UPPER")` - Lowercase a string - `upper`
+- `upper("lower")` - Uppercase a string - `LOWER`
+- `trimspace("  Yo!!\n")` - removes all whitespace at beginning and end
+
+Collection Standouts
+- `compact(["p","","o","t","t","e","r"])` - Removes empty strings
+- `concat(["p","o","t"], ["t","e","r"])` - Concats two strings
+- `contains(["p","o","t","t","e","r"], "t")` - returns if a string is in a list
+- `keys()` - returns keys from a map as a list
+- `values()` - returns values from a map as a list
+- `zipmap()` - create a map from 2 lists. The first is the keys, the second is the values
+
+File Standouts
+- `file("path.txt")` - Reads contents of files into a string
+- `fileexists("path.txt")` - Returns boolean if it exists
+
+Network Standouts
+- `cidrhost()` - Calculates a host IP based on a CIDR range and index
+- `cidrnetmask()` - Calculates a netmask based on a CIDR range
+- `cidrsubnet()` - Gets a subnet CIDR if you want to split a cidr range
