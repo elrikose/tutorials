@@ -15,6 +15,8 @@
 - [Terraform Expressions](./Expressions.md) - Using expressions
 - [Terraform State](./State.md) - Using expressions
 - [Infrastructure Drift](./InfrastructureDrift.md) - When remote resources drift from your terraform state
+- [Terraform Modules](./Modules.md) - Shared code for Terraform
+
 
 - [Troubleshooting](./Troubleshooting.md)
 
