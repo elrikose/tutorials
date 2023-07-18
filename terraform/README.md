@@ -17,6 +17,7 @@ Basics
 - [Terraform State](./State.md) - Querying and manipulating state
 - [Terraform Modules](./Modules.md) - Shared code for Terraform
 - [Terraform Backends](./Backends.md) - State and operation backends
+- [Terraform Workspaces](./Workspaces.md) - Workspaces
 
 Hashicorp
 - [Terraform Cloud](./Cloud.md) - Terraform Cloud
