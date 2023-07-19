@@ -22,6 +22,7 @@ Basics
 Hashicorp
 - [Terraform Cloud](./Cloud.md) - Terraform Cloud
 - [Terraform Enterprise](./Enterprise.md) - Terraform Enterprise
+- [Other Hashicorp Tools](./Tools.md) - Packer, Consul, Vault, etc.
 
 Fixing and troubleshooting
 - [Troubleshooting](./Troubleshooting.md)
