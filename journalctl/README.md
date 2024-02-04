@@ -19,6 +19,7 @@ journalctl -b -1
 Use `--since` and/or `--until` with a natural language format:
 
 ```
+journalctl --since "22:00:00"
 journalctl --since "20 minutes ago"
 journalctl --since "10 minutes ago" --until "5 minutes ago"
 ```
