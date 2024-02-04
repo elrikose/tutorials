@@ -12,13 +12,14 @@ journalctl -b
 
 Show all log messages during previous boot:
 
-```
+```sh
 journalctl -b -1
 ```
 
 Use `--since` and/or `--until` with a natural language format:
 
-```
+```sh
+journalctl --since "2024-01-01"
 journalctl --since "22:00:00"
 journalctl --since "20 minutes ago"
 journalctl --since "10 minutes ago" --until "5 minutes ago"
