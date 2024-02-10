@@ -2,6 +2,8 @@
 
 These pages contain all the notes I used for studying for the Certified Kubernetes Administrator (CKA) Exam:
 
+- [CKS Portal](https://trainingportal.linuxfoundation.org/learn/dashboard/)
+- [CKS Handbook](https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2)
 - [CKA Information](./CKA.md) - Requirement and information about the test 
 - [killer.sh Simulator](./killer.md) - [killer.sh](https://killer.sh) simulator
 - [Killer Coda](./killercoda.md) - [Killer Coda](https://killercoda.com/killer-shell-cka) CKA scenarios

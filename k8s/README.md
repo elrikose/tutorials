@@ -4,6 +4,7 @@ This section is a jumping off point to deeper dives on Kubernetes subjects.
 
 Certifications
 - [CKA](./cka) - Certified Kubernetes Administrator Exam
+- [CKS](./cks) - Certified Kubernetes Security Specialist Exam
 
 Tools:
 - [Tools](tools.md) - Lens, k9s, kubectx
