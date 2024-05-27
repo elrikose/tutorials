@@ -7,3 +7,4 @@ Here are the topics to dive deeper into Actions
 - [Introduction](./topics/Introduction.md) - an overview of GitHub Actions
 - [Action Components](./topics/Components.md) - part of an Action workflow
 - [Action Triggers](./topics/Triggers.md) - events that cause an action workflow to run
+- [Environment Variables](./topics/Environment.md) - variables for the build environment
