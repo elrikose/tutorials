@@ -6,6 +6,7 @@ This knowledge base repo is to maintain a set of documentation to revisit when I
 - [aws](aws) - Amazon Web Services 
 - [brew](brew) - Homebrew package 
 - [gcloud](gcloud) - Google Cloud CLI
+- [github](github) - GitHub services
 - [helm](helm) - Helm
 - [kubernetes](k8s) - Kubernetes and CKA notes
 - [linux](linux) - Linux OS
