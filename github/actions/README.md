@@ -8,3 +8,4 @@ Here are the topics to dive deeper into Actions
 - [Action Components](./topics/Components.md) - part of an Action workflow
 - [Action Triggers](./topics/Triggers.md) - events that cause an action workflow to run
 - [Environment Variables](./topics/Environment.md) - variables for the build environment
+- [Logging](./topics/Logging.md) - build logs
