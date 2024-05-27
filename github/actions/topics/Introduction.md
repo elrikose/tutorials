@@ -26,7 +26,7 @@ GitHub Actions are made up of workflows, jobs, and steps. Here is an example ste
 
 ```yaml
 steps:
-  - uses: actions/checkout@v2
+  - uses: actions/checkout@v3
   - name: Build code
     run: |
       make install
@@ -51,7 +51,7 @@ jobs:
     name: Hello world action
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - uses: ./action-a
       with:

@@ -13,5 +13,5 @@ A **Job** is a section of the workflow that links to a runner. Multiple jobs can
 
 A **Step** is a task that can run an action.
 
-An **Action** are the command that are executed. They can either be referenced externally like the checkout command (`uses: actions/checkout@v2`) or a list of command `run: make install`.
+An **Action** are the command that are executed. They can either be referenced externally like the checkout command (`uses: actions/checkout@v3`) or a list of command `run: make install`.
 
