@@ -52,3 +52,37 @@ If there is a rule that shows shelling into a container:
 kubectl exec -it pod -- sh
 cat /var/log/syslog | grep falco | grep shell
 ```
+
+# Install on Linux (Ubuntu)
+
+Instructions on how to install Falco onto linux:
+https://falco.org/docs/getting-started/falco-linux-quickstart/
+
+```sh
+curl -fsSL https://falco.org/repo/falcosecurity-packages.asc | \
+sudo gpg --dearmor -o /usr/share/keyrings/falco-archive-keyring.gpg
+
+sudo apt update -y
+
+# Install Dependencies
+sudo apt install -y dkms make linux-headers-$(uname -r) dialog
+
+# Install falco
+sudo apt install -y falco
+```
+
+# Install on Kubernetes
+
+Instructions on how to install Falco into the cluster:
+https://falco.org/docs/getting-started/falco-kubernetes-quickstart/
+
+```sh
+# Add Helm repo
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
+
+# Deploy Chart
+helm install falco -n falco --set driver.kind=ebpf --set tty=true falcosecurity/falco --create-namespace
+```
+
+
