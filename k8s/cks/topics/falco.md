@@ -85,4 +85,11 @@ helm repo update
 helm install falco -n falco --set driver.kind=ebpf --set tty=true falcosecurity/falco --create-namespace
 ```
 
+Uninstall
+
+```sh
+helm uninstall falco -n falco
+kubectl delete ns falco
+```
+
 
