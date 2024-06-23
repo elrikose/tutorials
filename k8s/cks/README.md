@@ -56,6 +56,7 @@ Security benchmarking with Kubebench
 - [Ingress](./topics/ingress.md)
 - [Network Policies](./topics/networkpolicies.md)
 - [Secrets](./topics/secrets.md)
+- [Security Contexts](./topics/securitycontexts.md)
 - [Upgrading Kubernetes](./topics/upgrade.md)
 
 Tools:
