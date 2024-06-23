@@ -49,3 +49,16 @@ Security benchmarking with Kubebench
   - readonly file system
 - mTLS / Service Meshes
 
+# Topics
+
+- [Authentication and Authorization](./topics/authentication.md)
+- [Container Runtime Sandboxes](./topics/containerruntimes.md)
+- [Ingress](./topics/ingress.md)
+- [Network Policies](./topics/networkpolicies.md)
+- [Secrets](./topics/secrets.md)
+- [Upgrading Kubernetes](./topics/upgrade.md)
+
+Tools:
+- [AppArmor](./topics/apparmor.md)
+- [Falco](./topics/falco.md)
+- [Trivy](./topics/trivy.md)
