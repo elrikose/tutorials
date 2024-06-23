@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mutual-tls
+spec:
+  containers:
+  - args:
+    - sh
+    - -c
+    - ping google.com
+    image: bash
+    name: mutual-tls
+    resources: {}
+  - args:
+    - sh
+    - -c
+    - 'apt update && apt install iptables -y && iptables -L && sleep 1d'
+    image: ubuntu
+    name: proxy
+    resources: {}
+    securityContext:
+      capabilities:
+        add: ["NET_ADMIN"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
