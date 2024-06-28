@@ -1,5 +1,8 @@
 # Container Hardening
 
+Best Practices:
+https://docs.docker.com/build/building/best-practices/
+
 Keep the size of the container small by using multistage builds
 
 ```dockerfile
