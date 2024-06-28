@@ -53,6 +53,7 @@ Security benchmarking with Kubebench
 
 - [Authentication and Authorization](./topics/authentication.md)
 - [Container Runtime Sandboxes](./topics/containerruntimes.md)
+- [Image Hardening](./topics/imagehardening.md)
 - [Ingress](./topics/ingress.md)
 - [Mutual TLS (mTLS)](./topics/mtls.md)
 - [Network Policies](./topics/networkpolicies.md)
