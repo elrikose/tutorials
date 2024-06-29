@@ -64,4 +64,5 @@ Security benchmarking with Kubebench
 Tools:
 - [AppArmor](./topics/apparmor.md)
 - [Falco](./topics/falco.md)
+- [Kubesec](./topics/kubesec.md)
 - [Trivy](./topics/trivy.md)
