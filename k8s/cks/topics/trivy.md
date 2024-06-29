@@ -4,23 +4,54 @@
 
 Examples
 
-```sh
-trivy image httpd:2.4.39-alpine > infra.txt
+Through docker it is easy:
 
-trivy image nginx:1.19.1-alpine-perl > app1.txt
-trivy image nginx:1.20.2-alpine > app2.txt
+```sh
+docker run ghcr.io/aquasecurity/trivy:latest image nginx:latest
+```
+
+And then it dumps out a log
+
+```
+nginx:latest (debian 12.5)
+==========================
+Total: 173 (UNKNOWN: 2, LOW: 88, MEDIUM: 59, HIGH: 22, CRITICAL: 2)
+
+┌────────────────────┬─────────────────────┬──────────┬──────────────┬─────────────────────────┬───────────────────┬──────────────────────────────────────────────────────────────┐
+│      Library       │    Vulnerability    │ Severity │    Status    │    Installed Version    │   Fixed Version   │                            Title                             │
+├────────────────────┼─────────────────────┼──────────┼──────────────┼─────────────────────────┼───────────────────┼──────────────────────────────────────────────────────────────┤
+│ apt                │ CVE-2011-3374       │ LOW      │ affected     │ 2.6.1                   │                   │ It was found that apt-key in apt, all versions, do not       │
+│                    │                     │          │              │                         │                   │ correctly...                                                 │
+│                    │                     │          │              │                         │                   │ https://avd.aquasec.com/nvd/cve-2011-3374                    │
+├────────────────────┼─────────────────────┤          │              ├─────────────────────────┼───────────────────┼──────────────────────────────────────────────────────────────┤
+│ bash               │ TEMP-0841856-B18BAF │          │              │ 5.2.15-2+b2             │                   │ [Privilege escalation possible to other user than root]      │
+│                    │                     │          │              │                         │                   │ https://security-tracker.debian.org/tracker/TEMP-0841856-B1- │
+│                    │                     │          │              │                         │                   │ 8BAF                                                         │
+├────────────────────┼─────────────────────┤          │              ├─────────────────────────┼───────────────────┼──────────────────────────────────────────────────────────────┤
+│ bsdutils           │ CVE-2022-0563       │          │              │ 1:2.38.1-5+deb12u1      │                   │ util-linux: partial disclosure of arbitrary files in chfn    │
+│                    │                     │          │              │                         │                   │ and chsh when compiled...                                    │
+│                    │                     │          │              │                         │                   │ https://avd.aquasec.com/nvd/cve-2022-0563                    │
+├────────────────────┼─────────────────────┤          ├──────────────┼─────────────────────────┼───────────────────┼──────────────────────────────────────────────────────────────
+...
+```
+
+```sh
+docker run ghcr.io/aquasecurity/trivy image httpd:2.4.39-alpine > infra.txt
+
+docker run ghcr.io/aquasecurity/trivy image nginx:1.19.1-alpine-perl > app1.txt
+docker run ghcr.io/aquasecurity/trivy image nginx:1.20.2-alpine > app2.txt
 ```
 
 Here is how you get all of the critical ones:
 
 ```sh
-trivy image -s CRITICAL <container image name>
+docker run ghcr.io/aquasecurity/trivy image -s CRITICAL <container image name>
 ```
 
 Only showing CRITICAL
 
 ```sh
-$ trivy image -s CRITICAL nginx:1.20.2-alpine
+$ docker run ghcr.io/aquasecurity/trivy image -s CRITICAL nginx:1.20.2-alpine
 2024-05-07T03:02:40.389Z        INFO    Detected OS: alpine
 2024-05-07T03:02:40.390Z        INFO    Detecting Alpine vulnerabilities...
 2024-05-07T03:02:40.400Z        INFO    Number of language-specific files: 0
