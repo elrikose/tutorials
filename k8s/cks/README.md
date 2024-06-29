@@ -60,6 +60,7 @@ Security benchmarking with Kubebench
 - [Network Policies](./topics/networkpolicies.md)
 - [Secrets](./topics/secrets.md)
 - [Security Contexts](./topics/securitycontexts.md)
+- [Securing the Supply Chain](./topics/supplychain.md)
 - [Upgrading Kubernetes](./topics/upgrade.md)
 
 Tools:
