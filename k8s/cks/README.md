@@ -51,6 +51,7 @@ Security benchmarking with Kubebench
 
 ## Topics
 
+- [Attack Surface](./topics/attacksurface.md)
 - [Auditing](./topics/auditing.md)
 - [Authentication and Authorization](./topics/authentication.md)
 - [Container Immutability](./topics/immutability.md)
