@@ -49,7 +49,7 @@ Security benchmarking with Kubebench
   - readonly file system
 - mTLS / Service Meshes
 
-# Topics
+## Topics
 
 - [Auditing](./topics/auditing.md)
 - [Authentication and Authorization](./topics/authentication.md)
@@ -65,10 +65,20 @@ Security benchmarking with Kubebench
 - [Securing the Supply Chain](./topics/supplychain.md)
 - [Upgrading Kubernetes](./topics/upgrade.md)
 
-Tools:
+## Tools
+
+Kernel Tools
 - [AppArmor](./topics/apparmor.md)
-- [Conftest](./topics/conftest.md)
-- [Falco](./topics/falco.md)
-- [Kubesec](./topics/kubesec.md)
+- [seccomp](./topics/seccomp.md)
 - [strace](./topics/strace.md)
+
+Admission Controllers
+- [Open Policy Agent](./topics/opa.md) (OPA)
+
+Runtime Scanning
+- [Falco](./topics/falco.md)
+
+Static Analysis
+- [Conftest](./topics/conftest.md) - Part of OPA
+- [Kubesec](./topics/kubesec.md)
 - [Trivy](./topics/trivy.md)
