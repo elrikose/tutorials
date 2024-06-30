@@ -52,6 +52,7 @@ Security benchmarking with Kubebench
 # Topics
 
 - [Authentication and Authorization](./topics/authentication.md)
+- [Container Immutability](./topics/immutability.md)
 - [Container Runtime Sandboxes](./topics/containerruntimes.md)
 - [Image Hardening](./topics/imagehardening.md)
 - [Image Vulnerabilities](./topics/imagevulnerabilities.md)
