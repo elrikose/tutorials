@@ -69,7 +69,7 @@ cat /var/log/syslog | grep falco | grep shell
 
 ## Exercise
 
-Change falco rul to get custom output format:
+Change falco rule to get custom output format:
 
 - Rule: "A shell was spawned in a container with an attached terminal"
 - Output Format: "TIME, USER-NAME, CONTAINER-NAME, CONTAINER-ID"
