@@ -1,6 +1,4 @@
-# seccomp
-
-## strace for system calls
+# strace for system calls
 
 `strace` is a tool to see what kind of system calls a process can make. Usually pre-installed
 

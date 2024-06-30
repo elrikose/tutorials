@@ -70,4 +70,5 @@ Tools:
 - [Conftest](./topics/conftest.md)
 - [Falco](./topics/falco.md)
 - [Kubesec](./topics/kubesec.md)
+- [strace](./topics/strace.md)
 - [Trivy](./topics/trivy.md)
