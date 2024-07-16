@@ -240,7 +240,25 @@ useelrikoseOpaque"
 
 `elrikose` is in the secret.
 
-You can now encrypt etcd at rest by using an `EncryptionConfiguration` resource and then setting `--encryption-provider-config` to specifiy it.
+You can now encrypt etcd at rest by using an `EncryptionConfiguration` resource and then setting `--encryption-provider-config` to specify it.
 
+https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+
+```yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+      - configmaps
+    providers:
+      - aescbc:
+          keys:
+            - name: key1
+              # See the following text for more details about the secret value
+              secret: <BASE 64 ENCODED SECRET>
+      - identity: {} # this fallback allows reading unencrypted secrets;
+                     # for example, during initial migration
+```
 
 

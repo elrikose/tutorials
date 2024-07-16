@@ -14,11 +14,10 @@ Service Meshs:
 Create a `mutual-tls` pod:
 
 ```sh
-kubectl run mutual-tls --image=bash -oyaml --dry-run=client -- sh -c 'ping google.com' > mu
-tual-tls.yaml
+kubectl run mutual-tls --image=bash -oyaml --dry-run=client -- sh -c 'ping google.com' > mutual-tls.yaml
 ```
 
-
+This is the manifest:
 
 ```yaml
 apiVersion: v1
@@ -77,7 +76,4 @@ spec:
   restartPolicy: Always
 status: {}
 ```
-
-
-
 

@@ -10,7 +10,27 @@ If you don't have the network plugins, the resources are just ignored. By defaul
 
 # Policy Examples
 
-Default Deny of everything in the default namespace
+Allow all traffic to the backend pods
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: backend-allow-all
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+  - Ingress
+  ingress:
+  - {}
+```
+
+The `{}` is an empty selector and selects ALL items. The null selector `[]` selects no items.
+
+Default Deny of everything in the default namespace.
 
 ```yaml
 # deny all incoming and outgoing traffic from all pods in namespace default
@@ -26,7 +46,9 @@ spec:
   - Ingress
 ```
 
-Default deny of everything except DNS (port 53)
+The `podSelector: {}` is an empty selector and selects ALL items. A null selector `[]` selects no items.
+
+Default deny of everything except DNS (port 53):
 
 ```yaml
 # deny all incoming and outgoing traffic from all pods in namespace default

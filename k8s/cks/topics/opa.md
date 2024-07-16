@@ -133,7 +133,7 @@ spec:
 
 ## Create a policy that requires labels on a namespace
 
-Create a constraint template taht inforces that a namespace has a certain label
+Create a constraint template that enforces that a namespace has a certain label
 
 ```yaml
 apiVersion: templates.gatekeeper.sh/v1beta1
