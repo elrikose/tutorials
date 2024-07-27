@@ -90,14 +90,14 @@ spec:
 This fails:
 
 ```sh
-$ kubectl run nginx --image nginx                                                  
+$ kubectl run nginx --image nginx
 Error from server ([pod-trusted-images] not trusted image!): admission webhook "validation.gatekeeper.sh" denied the request: [pod-trusted-images] not trusted image!
 ```
 
 This succeeds:
 
 ```sh
-$ kubectl run nginx --image docker.io/nginx  
+$ kubectl run nginx --image docker.io/nginx
 pod/nginx created
 ```
 
@@ -106,3 +106,63 @@ pod/nginx created
 You can use an external webhook using the ImagePolicyWebhook Admission controller. You can see how to set one up to an external service here:
 
 https://youtu.be/d9xfB5qaOfg?t=30102
+
+Add an `ImagePolicyWebhook` to the `--enable-admission-plugins`:
+
+```yaml
+ - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook
+ - --admission-control-config-file=/etc/kubernetes/admission/admission_config.yaml
+```
+
+It will fail as there is no configuration for that. You need an `AdmissionConfiguration` in an `admission_config.yaml`:
+
+```yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: AdmissionConfiguration
+plugins:
+  - name: ImagePolicyWebhook
+    configuration:
+      imagePolicy:
+        kubeConfigFile: /etc/kubernetes/admission/kubeconf
+        allowTTL: 50
+        denyTTL: 50
+        retryBackoff: 500
+        defaultAllow: true
+```
+
+`defaultAllow` allows things to work even if the service is done.
+
+```yaml
+apiVersion: v1
+kind: Config
+
+# clusters refers to the remote service.
+clusters:
+- cluster:
+    certificate-authority: /etc/kubernetes/admission/external-cert.pem  # CA for verifying the remote service.
+    server: https://external-service:1234/check-image                   # URL of remote service to query. Must use 'https'.
+  name: image-checker
+
+contexts:
+- context:
+    cluster: image-checker
+    user: api-server
+  name: image-checker
+current-context: image-checker
+preferences: {}
+
+# users refers to the API server's webhook configuration.
+users:
+- name: api-server
+  user:
+    client-certificate: /etc/kubernetes/admission/apiserver-client-cert.pem     # cert for the webhook admission controller to use
+    client-key:  /etc/kubernetes/admission/apiserver-client-key.pem             # key matching the cert
+```
+
+
+The API server can not start because the service is down:
+
+```sh
+$ k run test-nginx --image nginx
+Error from server (Forbidden): pods "test-nginx" is forbidden: Post "https://external-service:1234/check-image?timeout=30s": dial tcp lookup external-service on 169.254.169.254.53: no such host
+```
