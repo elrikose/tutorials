@@ -25,9 +25,15 @@ journalctl --since "20 minutes ago"
 journalctl --since "10 minutes ago" --until "5 minutes ago"
 ```
 
-Show logs from a specific service
+List all units
 
+```sh
+journalctl --field _SYSTEMD_UNIT
 ```
+
+Show logs from a specific service unit
+
+```sh
 journalctl -u kubelet.service
 ```
 
