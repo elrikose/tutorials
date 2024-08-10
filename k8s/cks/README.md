@@ -1,6 +1,6 @@
 # Certified Kubernetes Security Specialist (CKS)
 
-These pages contain all the notes I used for studying for the Certified Kubernetes Administrator (CKA) Exam:
+These pages contain all the notes I used for studying for the Certified Kubernetes Security Specialist (CKS) Exam:
 
 - [CKS Portal](https://trainingportal.linuxfoundation.org/learn/dashboard/)
 - [CKS Handbook](https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2)
