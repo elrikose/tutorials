@@ -18,7 +18,7 @@ You can use the following optional values to specify communication using a certa
 # Service Mesh
 
 You can encrypt the traffic by a service mesh:
-- Proxy sidecar for each container. 
+- Proxy sidecar for each container.
 - Certs are maintained by service mesh.
 - initContainer sets up network routing through the proxy
 
