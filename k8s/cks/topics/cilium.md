@@ -58,6 +58,26 @@ Cilium implements next-generation mutual authentication:
 - No sidecars for cryptographic identity authentication
 - Authentication is decoupled from encryption
 
+# Transparent Encryption Setup (IPSec)
+
+- Setup a cluster without any CNI plugins
+- Create a secret key that is used by Cilium (`cilium-ipsec-keys`)
+- Install Cilium (`cilium install --encryption ipsec`)
+- Make sure it is configured with `cilium status`.
+
+# Transparent Encryption Setup (WireGuard)
+
+WireGuard Available on Linux Kernels > 5.6 (`uname -a`). WireGuard is a lightweight VPN
+
+- Install Cilium (`cilium install --encryption wireguard`)
+- WireGuard doesn't require the creation of a key. Each node creates its own encryption keypair
+- Make sure it shows encryption with `cilium status | grep Encryption`:
+
+```sh
+Encryption:                Wireguard     [cilium_wg0 (Pubkey: 5kXvE83fH124..., Port 51871, Peers: 3)]
+```
+
 # Reference
 
 [Effortless Mutual Authentication with Cilium | Liz Rice - YouTube](https://www.youtube.com/watch?v=0t_lhV0fvQ8&t=16s)
+[Cilium Transparent Encryption with IPsec and WireGuard - YouTube](https://www.youtube.com/watch?v=RAmJXsMeACU&t=22s)
