@@ -266,5 +266,44 @@ spec:
           kubernetes.io/metadata.name: default
 ```
 
+# Preventing Pod access to Metadata
 
+Block egress to the metadata server at `169.254.169.254/32` by default:
 
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cloud-metadata-deny
+  namespace: default
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 169.254.169.254/32
+```
+
+But some pods need access to the metadata server:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: cloud-metadata-allow
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: metadata-accessor
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 169.254.169.254/32
+```
