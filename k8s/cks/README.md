@@ -62,10 +62,12 @@ Security benchmarking with Kubebench
 - [Ingress](./topics/ingress.md)
 - [Mutual TLS (mTLS)](./topics/mtls.md)
 - [Network Policies](./topics/networkpolicies.md)
+- [Role-based Access Control (RBAC)](./topics/rbac.md)
 - [Secrets](./topics/secrets.md)
 - [Security Contexts](./topics/securitycontexts.md)
 - [Securing the Supply Chain](./topics/supplychain.md)
 - [Upgrading Kubernetes](./topics/upgrade.md)
+- [Verify Platform Binaries](./topics/verifybinaries.md)
 
 ## Tools
 
@@ -78,6 +80,7 @@ Admission Controllers
 - [Open Policy Agent](./topics/opa.md) (OPA)
 
 Runtime Scanning
+- [KubeBench](./topics/kubebench.md)
 - [Falco](./topics/falco.md)
 
 Static Analysis
