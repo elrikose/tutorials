@@ -66,6 +66,7 @@ Security benchmarking with Kubebench
 - [Secrets](./topics/secrets.md)
 - [Security Contexts](./topics/securitycontexts.md)
 - [Securing the Supply Chain](./topics/supplychain.md)
+- [Service Accounts](./topics/serviceaccounts.md)
 - [Upgrading Kubernetes](./topics/upgrade.md)
 - [Verify Platform Binaries](./topics/verifybinaries.md)
 
