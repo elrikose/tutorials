@@ -3,15 +3,57 @@
 Controlling Access to the Kubernetes API:
 https://kubernetes.io/docs/concepts/security/controlling-access/
 
+API Requests are always tied to:
+- Users
+- ServiceAccount
+- Anonymous
+
+Every request must authenticate unless done anonymously.
+
+Things we should restrict by default:
+- Anonymous access
+- Close insecure port
+- Dont expose the API server externally
+- Restrict Access from Nodes to API (NodeRestriction)
+- Prevent unauthorized access (RBAC)
+- Prevent pods from talking to the API.
+
 
 Different ways you can connect:
 
-- Outside -> API (user
+- Outside -> API (user)
 - Pod -> API (automounted tokens)
 - Node -> API (kubelet)
 
-Anonymous Access `--anonymous-auth`
-Insecure Access `--insecure-port=8080`
+# Disble Anonymous Access
+
+Go to the control plane where there is the API Server manifest. Add `--anonymous-auth=false`
+
+Then you get unauthorized:
+
+```sh
+$ curl -k https://localhost:6443
+{
+  "kind": "Status",
+  "apiVersion": "v1",
+  "metadata": {},
+  "status": "Failure",
+  "message": "Unauthorized",
+  "reason": "Unauthorized",
+  "code": 401
+}
+```
+
+# Remove the Insecure Port
+
+Go to the control plane where there is the API Server manifest. Remove  `--insecure-port=8080`
+
+- Sent over HTTP
+- Bypasses authentication and authorization modules
+- Admission Controller is still enforced
+
+If you want to disable the insecure port, set it to 0: `--insecure-port=0`
+
 Certificates
 
 # User Authenticaton via curl
@@ -132,6 +174,31 @@ $ curl https://10.154.161.198:6443 --cacert ca.crt --cert admin.crt --key admin.
 }
 ```
 
+You can get the version:
+
+```sh
+$ curl https://10.154.161.198:6443/version --cacert ca.crt --cert admin.crt --key admin.key
+{
+  "major": "1",
+  "minor": "31",
+  "gitVersion": "v1.31.3",
+  "gitCommit": "c83cbee114ddb732cdc06d3d1b62c9eb9220726f",
+  "gitTreeState": "clean",
+  "buildDate": "2024-11-19T13:48:20Z",
+  "goVersion": "go1.22.8",
+  "compiler": "gc",
+  "platform": "linux/amd64"
+}
+```
+
+# Enable Cluster Externally
+
+All you need to do is change your Kubernetes service in the `default` namespace from ClusterIP to NodePort.
+
+Then you can download the kubeconfig and change the service IP address to the cluster and NodePort.
+
+You may have to put the DNS name in `/etc/hosts`.
+
 # Addmission Controller
 
 ## NodeRestriction
@@ -145,13 +212,13 @@ Check status by going to `/etc/kubernetes/manifests/kube-apiserver.yaml`
 Log into the worker, set the kubeconfig and you can't edit labels on the master:
 
 ```sh
-export KUBECONFIG=/etc/kubernetes/kubelet.conf 
+export KUBECONFIG=/etc/kubernetes/kubelet.conf
 $ k get nodes
 NAME     STATUS   ROLES           AGE    VERSION
 master   Ready    control-plane   6d1h   v1.29.6
 worker   Ready    <none>          6d1h   v1.29.6
 
-$ k edit node master 
+$ k edit node master
 error: nodes "master" could not be patched: nodes "master" is forbidden: node "worker" is not allowed to modify node "master"
 ```
 
@@ -167,4 +234,3 @@ Except labels that start with `node-restriction`:
 $ kubectl label node worker node-restriction.kubernetes.io/test=yes
 Error from server (Forbidden): nodes "worker" is forbidden: is not allowed to modify labels: node-restriction.kubernetes.io/test
 ```
-
