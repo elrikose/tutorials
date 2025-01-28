@@ -207,7 +207,7 @@ lrwxrwxrwx 1 root root 11 Jun 22 17:52 user -> ..data/user
 Login to the master node as root and get the certs the API server uses for ETCD
 
 ```sh
-grep etcd /etc/kubernetes/manifests/kube-apiserver.yaml 
+grep etcd /etc/kubernetes/manifests/kube-apiserver.yaml
     - --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt
     - --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt
     - --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key
@@ -240,9 +240,19 @@ useelrikoseOpaque"
 
 `elrikose` is in the secret.
 
-You can now encrypt etcd at rest by using an `EncryptionConfiguration` resource and then setting `--encryption-provider-config` to specify it.
-
 https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
+
+You can now encrypt etcd at rest by using an `EncryptionConfiguration` resource and then setting `--encryption-provider-config` for the Kubernetes API server manifest to specify it.
+
+Create a file on the controller node like `/etc/kubernetes/etcd/ec.yaml`
+
+Add the config to the Kube API Server:
+
+```yaml
+  --encryption-provider-config=/etc/kubernetes/etcd/ec.yaml
+```
+
+You then have to volume mount the `/etc/kubernetes/etcd` folder in the API server
 
 ```yaml
 apiVersion: apiserver.config.k8s.io/v1
@@ -261,4 +271,28 @@ resources:
                      # for example, during initial migration
 ```
 
+Secrets and configmaps would be encrypted with `aescbc` and everything else would not. If identity would be listed first, nothing would be encrypted.
 
+```yaml
+apiVersion: apiserver.config.k8s.io/v1
+kind: EncryptionConfiguration
+resources:
+  - resources:
+      - secrets
+      - configmaps
+    providers:
+      - identity: {}
+      - aescbc:
+          keys:
+            - name: key1
+              # See the following text for more details about the secret value
+              secret: <BASE 64 ENCODED SECRET>
+```
+
+NOTE: The password that you select here has to be one of 16, 24, or 32 characters long or you'll get an error.
+
+If you want to replace all the secrets so they are encrypted or decrypted after you change the `--encryption-provider-config`, you would do this:
+
+```sh
+kubectl get secrets -A -ojson | kubectl replace -f -
+```
