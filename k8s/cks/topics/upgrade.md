@@ -7,6 +7,12 @@ Major.minor.patch (1.27.6)
 
 Minor version every 3 months
 
+Why do you upgrade?
+- Support
+- Security Fixes
+- Bug Fixes
+- Stay Up to Date for Dependencies
+
 # Upgrade Mechanism
 
 - Upgraded Control Plane components (apiserver, scheduler, etc)
@@ -30,7 +36,15 @@ kubectl drain master --ignore-daemonsets
 On Ubuntu, show what versions you can upgrade to:
 
 ```sh
-$ apt-cache show kubeadm | grep Version
+$ sudo apt get update
+$ sudo apt-cache show kubeadm | grep Version
+Version: 1.31.5-1.1
+Version: 1.31.4-1.1
+Version: 1.31.3-1.1
+Version: 1.31.2-1.1
+Version: 1.31.1-1.1
+Version: 1.31.0-1.1
+Version: 1.30.5-1.1
 Version: 1.29.6-1.1
 Version: 1.29.5-1.1
 Version: 1.29.4-2.1
@@ -38,34 +52,6 @@ Version: 1.29.3-1.1
 Version: 1.29.2-1.1
 Version: 1.29.1-1.1
 Version: 1.29.0-1.1
-Version: 1.28.11-1.1
-Version: 1.28.10-1.1
-Version: 1.28.9-2.1
-Version: 1.28.8-1.1
-Version: 1.28.7-1.1
-Version: 1.28.6-1.1
-Version: 1.28.5-1.1
-Version: 1.28.4-1.1
-Version: 1.28.3-1.1
-Version: 1.28.2-1.1
-Version: 1.28.1-1.1
-Version: 1.28.0-1.1
-Version: 1.27.15-1.1
-Version: 1.27.14-1.1
-Version: 1.27.13-2.1
-Version: 1.27.12-1.1
-Version: 1.27.11-1.1
-Version: 1.27.10-1.1
-Version: 1.27.9-1.1
-Version: 1.27.8-1.1
-Version: 1.27.7-1.1
-Version: 1.27.6-1.1
-Version: 1.27.5-1.1
-Version: 1.27.4-1.1
-Version: 1.27.3-1.1
-Version: 1.27.2-1.1
-Version: 1.27.1-1.1
-Version: 1.27.0-2.1
 ```
 
 Unmark kubeadm for upgrade:
@@ -113,4 +99,3 @@ sudo apt install kubectl=1.29.6-1.1 kubelet=1.29.6-11
 ```sh
 kubectl uncordon worker
 ```
-
