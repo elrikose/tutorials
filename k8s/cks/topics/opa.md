@@ -3,6 +3,7 @@
 Open Policy Agent (OPA) is an Admission Controller. You can use it to enforce policies of whether pods can be created for example.
 
 OPA:
+- General purpose engine
 - Not Kubernetes specific
 - Easy language implementation (Rego)
 - Works with both JSON and YAML
@@ -15,6 +16,8 @@ OPA Gatekeeper
 The Custom Resource Definitions (CRD) implement:
 - Constraint Template (eg. Required Labels)
 - Constraint that is an implementation of that template
+
+Constraint Templates create CRDs that are used by constraints
 
 # Install OPA Gatekeeper
 
@@ -36,7 +39,7 @@ kubectl apply -f https://raw.githubusercontent.com/killer-sh/cks-course-environm
 After install you should have a gatekeeper-system namespace:
 
 ```sh
-$ kubectl get ns                     
+$ kubectl get ns
 NAME                   STATUS   AGE
 default                Active   7d1h
 gatekeeper-system      Active   27s
@@ -74,7 +77,7 @@ As part of the installation, there should have also been the Validating webhook.
 validatingwebhookconfiguration.admissionregistration.k8s.io/gatekeeper-validating-webhook-configuration
 ```
 
-
+The Gatekeeper is not a mutating webhook which allows you to change a pod definition.
 
 # Creating a Deny All Policy
 
@@ -129,7 +132,10 @@ spec:
 
 - `K8sAlwaysDeny` is the connector between the template and the constraint implmentations
 - The `rego` section there is a condition if it passes or fails then it prints out the message
-- In this case it prints "Access Denied!" if you create any kind of Pod
+- In this case it prints "Access Denied!" if you create **any** kind of Pod
+- The OPA will only deny **new** pods that are started, it won't stop existing
+- If you describe the constraint it will show how many violations there are in total including running pods.
+- All booleans in the violation must be true. If one of them is false then it succeeds.
 
 ## Create a policy that requires labels on a namespace
 
