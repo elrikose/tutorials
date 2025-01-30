@@ -59,7 +59,8 @@ spec:
 kubectl run immutable --image=httpd -oyaml --dry-run=client
 ```
 
-And then you delete `touch` and `bash` after the fact.
+- Set the `securityContext:` to `readOnlyRootFilesystem: true`
+- Add an `emptyDir:` for the logs
 
 ```yaml
 apiVersion: v1
@@ -73,6 +74,12 @@ spec:
     resources: {}
     securityContext:
       readOnlyRootFilesystem: true
+    volumeMounts:
+    - mountPath: /usr/local/apache2/logs
+      name: log-volume
+  volumes:
+  - name: log-volume
+    emptyDir: {}
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 ```
