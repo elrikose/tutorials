@@ -17,7 +17,7 @@ spec:
   containers:
     ...
     securityContext:  # Container Level
-      runAsUser: 5000
+      runAsUser: 5000 # override the pod user
 ```
 
 So create a pod
@@ -84,7 +84,7 @@ spec:
 
 # Privileged Containers
 
-Containers run unprivileged by default. If you pass `--privileged` to the container runtime then the host's root 0 is the same as the containers root. 
+Containers run unprivileged by default. If you pass `--privileged` to the container runtime then the host's root 0 is the same as the containers root.
 
 In Kubernetes you can allow a pod to run privileged by using a security context:
 
@@ -94,7 +94,7 @@ spec:
     privileged: true
 ```
 
-There is also an ability for a pod to gain more privilege, which Kubernetes sets to defaults. Typically you disable it
+There is also an ability for a pod to gain more privilege, which Kubernetes sets to default. Typically you disable it:
 
 ```yaml
 spec:
