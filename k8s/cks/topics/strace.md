@@ -1,6 +1,40 @@
-  # strace for system calls
+# System Calls (syscalls)
 
-`strace` is a tool to see what kind of system calls a process can make. Usually pre-installed
+System calls are Kernel level calls that can be analyzed and prevented using tools.
+
+Examples:
+- open
+- close
+- chdir
+- chown
+- kill
+- reboot
+
+To get a comprehensive list on a Linux system:
+
+```sh
+man syscalls
+```
+
+Applications call system calls either directly or through libraries on the system.
+
+# strace for system calls
+
+`strace` is a tool to see what kind of system calls a process can make. Usually pre-installed. Main ways to invoke
+
+```sh
+# Run a program directly
+strace ls -l
+
+# Get a count and summary of calls
+strace -cw ls -l
+
+# For a running process
+strace -p 1234
+
+# Follow forks of the process
+strace ls -l -f
+```
 
 Using `strace` with the ls call
 
@@ -59,7 +93,7 @@ exit_group(0)                           = ?
 And you can see a more summarized view with `-cw`:
 
 ```sh
-$ strace -cw ls 
+$ strace -cw ls
 apparmor.md        conftest.md           falco.md           imagevulnerabilities.md  kubesec.md  networkpolicies.md  samples     secrets.md           supplychain.md  upgrade.md
 authentication.md  containerruntimes.md  imagehardening.md  ingress.md               mtls.md     opa.md              seccomp.md  securitycontexts.md  trivy.md
 % time     seconds  usecs/call     calls    errors syscall
@@ -96,7 +130,7 @@ The `/proc` folder:
 - Information and connections to processes and kernel
 - Learn how processes work
 - Configuration and admin taks
-- Files that don't exist, but you can access them. 
+- Files that don't exist, but you can access them.
 - Interface from the users
 
 Activity:
@@ -193,3 +227,19 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binHOSTNAME=master
 ```
 
 Another handy tool to look at the whole process tree with pids is `pstree -p`
+
+```sh
+$ pstree -p 1680390
+etcd(1680390)─┬─{etcd}(1680404)
+              ├─{etcd}(1680405)
+              ├─{etcd}(1680406)
+              ├─{etcd}(1680407)
+              ├─{etcd}(1680410)
+              ├─{etcd}(1680411)
+              ├─{etcd}(1680412)
+              ├─{etcd}(1680413)
+              ├─{etcd}(1680414)
+              ├─{etcd}(1680415)
+              ├─{etcd}(1680416)
+              └─{etcd}(1680417)
+```
