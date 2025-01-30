@@ -2,6 +2,10 @@
 
 Kubernetes traffic is unencrypted by default. Mutual TLS (mTLS) is to use certificates to encrypt traffic two-way.
 
+By default, every pod can communicate with every other pod. Usually TLS is terminated at the Ingress and then every other bit of communication is in the clear. If there is an attacker in the cluster and can intercept traffic, it would be a big security hole.
+
+With mTLS, every pod has the ability to encrypt or decrypt traffic coming in and out of the pod.
+
 # TLS
 
 You can use the following optional values to specify communication using a certain cipher:
@@ -25,6 +29,8 @@ You can encrypt the traffic by a service mesh:
 Service Meshs:
 - istio
 - linkerd
+
+The proxies would need to be init'd by initContainer and have NET_ADMIN capabilities. The main container would send to the proxy by iptables. The proxy would then encrypt and decrypt the traffic.
 
 Create a `mutual-tls` pod:
 
@@ -86,9 +92,8 @@ spec:
     resources: {}
     securityContext:
       capabilities:
-        add: ["NET_ADMIN"]
+        add: ["NET_ADMIN"] # Necessary for iptables -L
   dnsPolicy: ClusterFirst
   restartPolicy: Always
 status: {}
 ```
-
