@@ -17,7 +17,6 @@ Once done you can tail the falco in the `syslog`:
 tail -f /var/log/syslog | grep falco
 ```
 
-
 Config file:
 
 ```sh
@@ -45,12 +44,29 @@ Feb 10 21:17:08 controlplane falco: Loading rules from file /etc/falco/falco_rul
 ...
 ```
 
-Copy the falco rules into `/etc/falco/falco_rules.yaml`, edit them and then restart the service.
+On Ubuntu systems you can also use `journalctl`:
+
+```sh
+# journalctl -u falco-kmod -f
+-- Logs begin at Tue 2025-01-28 07:16:40 EST. --
+Jan 30 16:19:16 worker falco[624339]: Loading rules from:
+Jan 30 16:19:16 worker falco[624339]:    /etc/falco/falco_rules.yaml | schema validation: ok
+Jan 30 16:19:16 worker falco[624339]:    /etc/falco/falco_rules.local.yaml | schema validation: none
+Jan 30 16:19:16 worker falco[624339]: The chosen syscall buffer dimension is: 8388608 bytes (8 MBs)
+Jan 30 16:19:16 worker falco[624339]: Starting health webserver with threadiness 2, listening on 0.0.0.0:8765
+Jan 30 16:19:16 worker falco[624339]: Loaded event sources: syscall
+Jan 30 16:19:16 worker falco[624339]: Enabled event sources: syscall
+Jan 30 16:19:16 worker falco[624339]: Opening 'syscall' source with Kernel module
+```
+
+**Copy** all the falco rules from `/etc/falco/falco_rules.yaml` into `/etc/falco/falco_rules.localyaml`, edit them and then restart the service. NOTE: You MUST copy the file or the local won't have all of the macros loaded and the falco_rules.yaml will be reset.
 
 ```sh
 cd /etc/falco
-vi falco_rules.yaml 
-vi /etc/falco/falco_rules.local.yaml 
+cp falco_rules.yaml falco_rules.local.yaml
+vi /etc/falco/falco_rules.local.yaml
+
+# Edit the rule
 ```
 
 And then restart
@@ -78,7 +94,7 @@ Change falco rule to get custom output format:
 Find the rule in `/etc/falco/falco_rules.yaml`.
 
 ```sh
-$ grep "A shell was spawned" /etc/falco/falco_rules.yaml 
+$ grep "A shell was spawned" /etc/falco/falco_rules.yaml
   output: A shell was spawned in a container with an attached terminal (evt_type=%evt.type user=%user.name user_uid=%user.uid user_loginuid=%user.loginuid process=%proc.name proc_exepath=%proc.exepath parent=%proc.pname command=%proc.cmdline terminal=%proc.tty exe_flags=%evt.arg.flags %container.info)
 ```
 
@@ -142,5 +158,3 @@ Uninstall
 helm uninstall falco -n falco
 kubectl delete ns falco
 ```
-
-
