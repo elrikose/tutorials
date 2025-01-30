@@ -24,4 +24,10 @@ In runtime scanning you could add hooks in 2 places:
 Two open source tools:
 
 - Clair
+  - Open source
+  - Static analysis of vulnerabilities in application containers
+  - Ingests vulnerability metadata from a set of sources
+  - API
 - [Trivy](./trivy.md)
+  - Open source
+  - Simple, easy, and fast.

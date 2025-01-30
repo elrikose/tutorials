@@ -45,6 +45,28 @@ registry.k8s.io/kube-proxy:v1.29.6
 registry.k8s.io/kube-scheduler:v1.29.6
 ```
 
+Another way to see it by how it is assigned to a pod
+
+```sh
+$ kubectl get pods -n ns -o='custom-columns=NAME:metadata.name,IMAGE:spec.containers[*].image' -A
+NAME                                      IMAGE
+cassandra                                 nginx
+accessor                                  nginx
+backend                                   nginx
+frontend                                  nginx
+calico-kube-controllers-94fb6bc47-m96tw   docker.io/calico/kube-controllers:v3.24.1
+canal-2fzt4                               docker.io/calico/node:v3.24.1,quay.io/coreos/flannel:v0.15.1
+canal-p98xk                               docker.io/calico/node:v3.24.1,quay.io/coreos/flannel:v0.15.1
+coredns-7c65d6cfc9-8nrl2                  registry.k8s.io/coredns/coredns:v1.11.3
+coredns-7c65d6cfc9-9bttv                  registry.k8s.io/coredns/coredns:v1.11.3
+etcd-master                               registry.k8s.io/etcd:3.5.15-0
+kube-apiserver-master                     registry.k8s.io/kube-apiserver:v1.31.5
+kube-controller-manager-master            registry.k8s.io/kube-controller-manager:v1.31.5
+kube-proxy-x7qzd                          registry.k8s.io/kube-proxy:v1.31.5
+kube-proxy-xtjkr                          registry.k8s.io/kube-proxy:v1.31.5
+kube-scheduler-master                     registry.k8s.io/kube-scheduler:v1.31.5
+```
+
 # Trusted Images with OPA
 
 Whitelist some registries using OPA:
@@ -103,9 +125,11 @@ pod/nginx created
 
 ## ImagePolicyWebhook
 
-You can use an external webhook using the ImagePolicyWebhook Admission controller. You can see how to set one up to an external service here:
+You can use an external service (webhook) using the ImagePolicyWebhook Admission controller. You can see how to set one up to an external service here:
 
 https://youtu.be/d9xfB5qaOfg?t=30102
+
+The idea is the Admission Controller conacts the external service with the list of containers in a `ImageReview` object. The service returns if the are useable or not. You can write the external service in whatever language you choose.
 
 Add an `ImagePolicyWebhook` to the `--enable-admission-plugins`:
 
@@ -130,7 +154,7 @@ plugins:
         defaultAllow: true
 ```
 
-`defaultAllow` allows things to work even if the service is done.
+`defaultAllow` allows new pods to work even if the external service is done. The `kubeconf` is used to contact the external service with certifications
 
 ```yaml
 apiVersion: v1
@@ -159,6 +183,13 @@ users:
     client-key:  /etc/kubernetes/admission/apiserver-client-key.pem             # key matching the cert
 ```
 
+After you add the following to the API server, you must also mount the `/etc/kubernetes/admission` folder
+
+```yaml
+ - --enable-admission-plugins=NodeRestriction,ImagePolicyWebhook
+ - --admission-control-config-file=/etc/kubernetes/admission/admission_config.yaml
+```
+
 
 The API server can not start because the service is down:
 
@@ -166,3 +197,5 @@ The API server can not start because the service is down:
 $ k run test-nginx --image nginx
 Error from server (Forbidden): pods "test-nginx" is forbidden: Post "https://external-service:1234/check-image?timeout=30s": dial tcp lookup external-service on 169.254.169.254.53: no such host
 ```
+
+If the `defaultAllow: true` is set in the `AdmissionConfiguration` than you no longer get that error. You must restart the Kubernetes API Server.
