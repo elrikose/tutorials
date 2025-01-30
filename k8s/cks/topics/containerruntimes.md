@@ -19,7 +19,7 @@ Open Container Initiative is a Linux Foundation initiative to create standards f
 - image
 - distribution
 
-OCI creates a runtime called `runc`. 
+OCI creates a runtime called `runc`.
 
 # Container Runtime Interface
 
@@ -43,10 +43,10 @@ Kata containers uses a lightweight VM to isolate the images into their own Kerne
 
 ## gVisor
 
-gVisor is from Google -- A user spacee kernel for containers
+gVisor is from Google -- A user space kernel for containers
 - Again separation
 - Not Hypervisor or VM based
-- Simulates kernel calls 
+- Simulates kernel calls
 - Runtime is called `runsc`
 
 gVisor uses a `RuntimeClass`
@@ -62,7 +62,7 @@ handler: runsc
 And then deploy it:
 
 ```sh
-$ kubectl apply -f gvisor-rc.yaml 
+$ kubectl apply -f gvisor-rc.yaml
 runtimeclass.node.k8s.io/gvisor created
 ```
 
@@ -83,7 +83,7 @@ spec:
 It will get a problem because the `test` runtime class doesn't exist
 
 ```sh
-$ kubectl apply -f gvisor.yaml                                    
+$ kubectl apply -f gvisor.yaml
 Error from server (Forbidden): error when creating "gvisor.yaml": pods "gvisor" is forbidden: pod rejected: RuntimeClass "test" not found
 ```
 
@@ -123,11 +123,9 @@ https://github.com/killer-sh/cks-course-environment/blob/master/course-content/m
 After you install the `kubelet` and `containerd` should be running. Then you should see that the pod should be running in a gvisor sandbox
 
 ```sh
-$ kubectl exec gvisor -it -- bash             
+$ kubectl exec gvisor -it -- bash
 root@gvisor:/# uname -a
 Linux gvisor 4.4.0 #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 GNU/Linux
 ```
 
-
-
-
+In a running container you can see that it was started in gVisor by typing `dmesg`.
