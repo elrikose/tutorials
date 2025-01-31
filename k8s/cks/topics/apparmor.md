@@ -4,7 +4,7 @@ AppArmor - Shield between app and the kernel level functions.
 
 https://kubernetes.io/docs/tutorials/security/apparmor/
 
->AppArmor is applied to a Pod by specifying an AppArmor profile that each container should be run with. If any of the specified profiles are not loaded in the kernel, the kubelet will reject the Pod. You can view which profiles are loaded on a node by checking the /sys/kernel/security/apparmor/profiles file. 
+>AppArmor is applied to a Pod by specifying an AppArmor profile that each container should be run with. If any of the specified profiles are not loaded in the kernel, the kubelet will reject the Pod. You can view which profiles are loaded on a node by checking the /sys/kernel/security/apparmor/profiles file.
 
 A profile is created to restrict what an app can do. Three profile modes:
 
@@ -159,12 +159,12 @@ $ curl -v github.com
 > Host: github.com
 > User-Agent: curl/7.68.0
 > Accept: */*
-> 
+>
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 301 Moved Permanently
 < Content-Length: 0
 < Location: https://github.com/
-< 
+<
 * Connection #0 to host github.com left intact
 ```
 
@@ -189,7 +189,7 @@ curl: (6) Could not resolve host: github.com
 Here is the profile that was created:
 
 ```sh
-$ cat /etc/apparmor.d/usr.bin.curl 
+$ cat /etc/apparmor.d/usr.bin.curl
 # Last Modified: Sun Jun 30 16:39:34 2024
 #include <tunables/global>
 
@@ -204,7 +204,7 @@ $ cat /etc/apparmor.d/usr.bin.curl
 Now you can re-allow `curl` to work by using the `aa-logprof` command:
 
 ```sh
-$ aa-logprof 
+$ aa-logprof
 Reading log entries from /var/log/syslog.
 Updating AppArmor profiles in /etc/apparmor.d.
 Enforce-mode changes:
@@ -215,8 +215,8 @@ New Mode: owner r
 Severity: 2
 
  [1 - #include <abstractions/openssl>]
-  2 - #include <abstractions/ssl_keys> 
-  3 - owner /etc/ssl/openssl.cnf r, 
+  2 - #include <abstractions/ssl_keys>
+  3 - owner /etc/ssl/openssl.cnf r,
 (A)llow / [(D)eny] / (I)gnore / (G)lob / Glob with (E)xtension / (N)ew / Audi(t) / (O)wner permissions off / Abo(r)t / (F)inish
 ```
 
@@ -225,7 +225,7 @@ Allow the command with `A`. and then save with `S`:
 The profile looks like this:
 
 ```sh
-$ cat /etc/apparmor.d/usr.bin.curl 
+$ cat /etc/apparmor.d/usr.bin.curl
 # Last Modified: Sun Jun 30 16:46:08 2024
 #include <tunables/global>
 
@@ -295,7 +295,7 @@ $ podman run -d --security-opt apparmor=docker-nginx nginx
 /docker-entrypoint.sh: No files found in /docker-entrypoint.d/, skipping configuration
 2024/06/30 21:15:39 [notice] 1#1: using the "epoll" event method
 2024/06/30 21:15:39 [notice] 1#1: nginx/1.27.0
-2024/06/30 21:15:39 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2024/06/30 21:15:39 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14)
 2024/06/30 21:15:39 [notice] 1#1: OS: Linux 5.4.0-187-generic
 2024/06/30 21:15:39 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
 2024/06/30 21:15:39 [notice] 1#1: start worker processes
@@ -373,6 +373,3 @@ Then change the annotation back to the following:
 ```
 
 And it succeeds.
-
-
-
