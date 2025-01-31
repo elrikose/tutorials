@@ -5,15 +5,15 @@ API requests are made. You can tell Kubernetes to save all of the API requests m
 Why?
 - Did someone access a secret while it wasn't protected
 - When was the last time that user X accessed cluster Y
-- Does my CRD work properly
+- Does my CRD work properly?
 
 There are 4 Stages to an API Request:
 - RequestReceived - Events that happen as soon as the handler receives the request
 - ResponseStarted - After Response Headers are sent, but before Response Body. Only generated for long requests
 - ResponseComplete - No more bytes will be sent as the body is finished
-- Panic - when something bad happents
+- Panic - when something bad happens
 
-You can set which Audit Policy Stages you even want to log
+You can set which Audit Policy Stages you even want to log.
 
 Which events should you record? Depends on how many requests are being made. It could be a firehose.
 
@@ -27,7 +27,7 @@ There are 4 Audit Policy Levels
 apiVersion: audit.k8s.io/v1
 kind: Policy
 omitStages:
-  - "RequestReceived"
+  - "RequestReceived" # no data from RequestReceived
 rules:
 
 # log no "read" actions
@@ -53,7 +53,9 @@ rules:
 - level: Metadata
 ```
 
-Where to store all of the data? 
+Events are handled in order
+
+Where to store all of the data?
 - Stored in json file
 - Webhook logs
 - Dynamice backend
@@ -67,6 +69,7 @@ Configuration requires the `policy.yaml` file setup for the API server
 1. Change the policy file
 2. Disable auditing in API server, then restart
 3. Re-enable auditing in API server, then restart
+4. Test your changes
 
 If it doesn't restart check the logs via:
 
@@ -187,6 +190,3 @@ rules:
     omitStages:
       - "RequestReceived"
 ```
-
-
-
