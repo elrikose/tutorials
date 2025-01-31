@@ -33,7 +33,7 @@ Then just like AppArmor you can specify running it via the `--security-opt` comm
 $ docker run --security-opt seccomp=profile-docker-nginx.json nginx
 Unable to find image 'nginx:latest' locally
 latest: Pulling from library/nginx
-2cc3ae149d28: Pull complete 
+2cc3ae149d28: Pull complete
 ...
 2024/06/30 21:44:41 [notice] 1#1: start worker processes
 2024/06/30 21:44:41 [notice] 1#1: start worker process 29
@@ -43,9 +43,9 @@ latest: Pulling from library/nginx
 Now change the profile and remove the `write` function and re-run:
 
 ```sh
-$ sudo docker run --security-opt seccomp=profile-docker-nginx.json nginx
+$ docker run --security-opt seccomp=profile-docker-nginx.json nginx
 docker: Error response from daemon: OCI runtime start failed: cannot start an already running container: unknown.
-ERRO[0000] error waiting for container: 
+ERRO[0000] error waiting for container:
 ```
 
 # Exercise: Create a Nginx pod
@@ -91,4 +91,3 @@ If you put the wrong file name in there it fails:
 ```sh
   Warning  Failed     11s (x4 over 25s)  kubelet            Error: failed to create containerd container: cannot load seccomp profile "/var/lib/kubelet/seccomp/docker-nginx.json": open /var/lib/kubelet/seccomp/docker-nginx.json: no such file or directory
 ```
-
