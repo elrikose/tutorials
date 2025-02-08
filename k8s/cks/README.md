@@ -62,6 +62,7 @@ Security benchmarking with Kubebench
 - [Ingress](./topics/ingress.md)
 - [Mutual TLS (mTLS)](./topics/mtls.md)
 - [Network Policies](./topics/networkpolicies.md)
+- [Pod Security Standards](./topics/podsecuritystandards.md)
 - [Role-based Access Control (RBAC)](./topics/rbac.md)
 - [Secrets](./topics/secrets.md)
 - [Security Contexts](./topics/securitycontexts.md)
