@@ -77,3 +77,15 @@ Total: 3 (CRITICAL: 3)
 |         |                  |          |                   |               | -->avd.aquasec.com/nvd/cve-2022-37434 |
 +---------+------------------+----------+-------------------+---------------+---------------------------------------+
 ```
+
+And if you are looking for 2 specific CVEs, here is a good way to search with `grep -e`:
+
+```sh
+$ docker run ghcr.io/aquasecurity/trivy image -s CRITICAL nginx:1.20.2-alpine | grep -e CVE-2023-23914 -e CVE-2022-37434
+2025-02-09T19:38:31Z	INFO	[vulndb] Need to update DB
+2025-02-09T19:38:31Z	INFO	[vulndb] Downloading vulnerability DB...
+...
+│         │ CVE-2023-23914 │          │        │                   │ 7.79.1-r5     │ curl: HSTS ignored on multiple requests               │
+│         │ CVE-2023-23914 │          │        │                   │ 7.79.1-r5     │ curl: HSTS ignored on multiple requests               │
+│ zlib    │ CVE-2022-37434 │          │        │ 1.2.12-r0         │ 1.2.12-r2     │ zlib: heap-based buffer over-read and overflow in inf │
+```
