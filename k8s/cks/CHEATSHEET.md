@@ -1,6 +1,23 @@
 # CKS Cheatsheet
 
-This list a bunch of command-line items that are useful for certain topics:
+This list a bunch of command-line items that are useful for certain topics. Here is what you should enter into the shell to simplify most executions
+
+```sh
+# Dry-run Output
+export DO='--dry-run=client -o yaml'
+# Apply files
+alias kaf='kubectl apply -f'
+# Delete resource quickly
+alias kdel='kubectl delete --grace-period=0 --force'
+```
+
+Then you can use them like so:
+
+```sh
+kubectl run nginx --image=nginx $DO > nginx.yaml
+kaf nginx.yaml
+kdel pod nginx
+```
 
 # kube-bench
 
