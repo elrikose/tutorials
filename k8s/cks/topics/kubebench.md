@@ -20,9 +20,10 @@ $ docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t docker.io/aquasec/kub
 
 Options
 
+```sh
 -c 1.2.20 = Run the benchmark version 1.2.20 only
 --targets [master|node|controlplane|etcd|policies] = Target a specific part of the cluster
-
+```
 
 # Sample Reports
 
