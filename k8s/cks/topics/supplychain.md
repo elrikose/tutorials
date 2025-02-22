@@ -17,7 +17,7 @@ There could be security vulnerabilities anywhere throughout there. Developers ca
 List all images in your cluster
 
 ```sh
-kubectl get pods -A -oyaml | grep "image:" | sort | uniq | awk '{print $2}'
+kubectl get pods -A -o='custom-columns=:spec.containers[*].image' | sort | uniq'
 ```
 
 Outputs:

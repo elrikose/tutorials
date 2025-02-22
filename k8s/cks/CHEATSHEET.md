@@ -1,6 +1,8 @@
 # CKS Cheatsheet
 
-This list a bunch of command-line items that are useful for certain topics. Here is what you should enter into the shell to simplify most executions
+This list a bunch of command-line items that are useful for certain topics.
+
+For starters, here is what you should immediately enter into the shell to simplify most executions:
 
 ```sh
 # Dry-run Output
@@ -17,6 +19,17 @@ Then you can use them like so:
 kubectl run nginx --image=nginx $DO > nginx.yaml
 kaf nginx.yaml
 kdel pod nginx
+```
+
+# Linux
+
+```sh
+# List all open ports
+netstat -plnt
+lsof -i
+
+# Connections on a specific port
+lsof -i :22
 ```
 
 # kube-bench
@@ -158,6 +171,7 @@ trivy image nginx:1.20.2-alpine
 # Run only getting the CRITICAL level
 trivy image -s CRITICAL nginx:1.20.2-alpine
 
-# Run only getting the CRITICAL level that match CVE-1234 and CVE-5678
-trivy image -s CRITICAL nginx:1.20.2-alpine | grep -e "CVE-1234" -e "CVE-5678"
+# Run only getting the CRITICAL level that match two CVEs
+trivy image -s CRITICAL nginx:1.20.2-alpine | grep -e "CVE-2022-32207" -e "CVE-2022-37434"
+trivy image -s CRITICAL nginx:1.20.2-alpine | grep -E "CVE-2022-32207|CVE-2022-37434"
 ```
