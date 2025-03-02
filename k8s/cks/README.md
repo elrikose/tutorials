@@ -55,6 +55,7 @@ Security benchmarking with Kubebench
 - [Auditing](./topics/auditing.md)
 - [Authentication and Authorization](./topics/authentication.md)
 - [Cilium for Authentication/Encryption](./topic/cilium.md)
+- [Cilium Network Policies](./topic/ciliumnetworkpolicy.md)
 - [Container Immutability](./topics/immutability.md)
 - [Container Runtime Sandboxes](./topics/containerruntimes.md)
 - [Image Hardening](./topics/imagehardening.md)
