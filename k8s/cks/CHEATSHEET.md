@@ -32,6 +32,19 @@ lsof -i
 lsof -i :22
 ```
 
+# Software BOM
+
+```sh
+# Generate a SPDX-Json BOM
+bom generate --image registry.k8s.io/kube-apiserver:v1.32.0 --format json --output bom.json
+
+# Generate a CycloneDX with trivy
+trivy image --format cyclonedx --output bom2.json registry.k8s.io/kube-controller-manager:v1.31.0
+
+# Scan a json bom with trivy
+trivy sbom bom2.json
+```
+
 # kube-bench
 
 ```sh
