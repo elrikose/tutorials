@@ -21,6 +21,75 @@ kaf nginx.yaml
 kdel pod nginx
 ```
 
+# apt
+
+```sh
+# Update list of all available packages
+sudo apt update
+
+# Install an app
+sudo apt install tree
+
+# Install a specific version of an app
+sudo apt install tree=2.1.1-2ubuntu3
+
+# Upgrade all installed items without prompting
+sudo apt upgrade -y
+```
+
+App info
+
+```sh
+# List all apps that can or are installed
+$ apt list
+...
+
+# List all apps that are installed
+$ sudo apt list --installed
+...
+
+# List all apps that can be upgraded
+$ sudo apt list --upgradable
+...
+
+# List app, version, and architecture of a specific app:
+$ sudo apt list kubectl
+Listing... Done
+kubectl/unknown,now 1.31.7-1.1 amd64 [installed]
+kubectl/unknown 1.31.7-1.1 arm64
+kubectl/unknown 1.31.7-1.1 ppc64el
+kubectl/unknown 1.31.7-1.1 s390x
+
+# Show details about an app
+$ sudo apt show tree
+Package: tree
+Version: 2.1.1-2ubuntu3
+...
+Description: displays an indented directory tree, in color
+ Tree is a recursive directory listing command that produces a depth indented
+ listing of files, which is colorized ala dircolors if the LS_COLORS environment
+
+# Search for a certain app
+$ sudo apt search kubeadm
+Sorting... Done
+Full Text Search... Done
+...
+
+kubeadm/unknown 1.31.7-1.1 arm64
+  Command-line utility for administering a Kubernetes cluster
+```
+
+Hold/Unhold an install from upgrade
+
+```sh
+$ sudo apt-mark hold kubectl
+kubectl set on hold.
+$ sudo apt-mark showhold
+kubectl
+$ sudo apt-mark unhold kubectl
+Canceled hold on kubectl
+```
+
 # Linux
 
 ```sh
