@@ -38,7 +38,7 @@ sudo apt install tree=2.1.1-2ubuntu3
 sudo apt upgrade -y
 ```
 
-NOTE: Kubernetes requires that you have the keyring version installed for the `apt list` functionality below to report the correct info
+NOTE: Kubernetes requires that you have the specifc keyring version and debian source installed for the `apt list` functionality below to report the correct info
 
 ```sh
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-1-32-apt-keyring.gpg
@@ -65,10 +65,10 @@ $ sudo apt list --upgradable
 # List app, version, and architecture of a specific app:
 $ sudo apt list kubectl
 Listing... Done
-kubectl/unknown,now 1.31.7-1.1 amd64 [installed]
-kubectl/unknown 1.31.7-1.1 arm64
-kubectl/unknown 1.31.7-1.1 ppc64el
-kubectl/unknown 1.31.7-1.1 s390x
+kubectl/unknown,now 1.32.6-1.1 amd64 [installed]
+kubectl/unknown 1.32.6-1.1 arm64
+kubectl/unknown 2.6-1.1 ppc64el
+kubectl/unknown 1.32.6-1.1 s390x
 
 # Show details about an app
 $ sudo apt show tree
@@ -85,7 +85,7 @@ Sorting... Done
 Full Text Search... Done
 ...
 
-kubeadm/unknown 1.31.7-1.1 arm64
+kubeadm/unknown 1.32.6-1.1 arm64
   Command-line utility for administering a Kubernetes cluster
 ```
 
@@ -115,10 +115,10 @@ lsof -i :22
 
 ```sh
 # Generate a SPDX-Json BOM
-bom generate --image registry.k8s.io/kube-apiserver:v1.32.0 --format json --output bom.json
+bom generate --image registry.k8s.io/kube-apiserver:v1.32.6 --format json --output bom.json
 
 # Generate a CycloneDX with trivy
-trivy image --format cyclonedx --output bom2.json registry.k8s.io/kube-controller-manager:v1.31.0
+trivy image --format cyclonedx --output bom2.json registry.k8s.io/kube-controller-manager:v1.32.6
 
 # Scan a json bom with trivy
 trivy sbom bom2.json
@@ -127,18 +127,18 @@ trivy sbom bom2.json
 # kube-bench
 
 ```sh
-# Run against Kubernetes 1.31 security
-kube-bench run --version 1.31
+# Run against Kubernetes 1.32 security
+kube-bench run --version 1.32
 
 # Run kube-bench against a particular code:
 kube-bench run -c 1.3.2
 
 # Run against different targets
-kube-bench run --targets master --version 1.31
-kube-bench run --targets node --version 1.31
-kube-bench run --targets controlplane --version 1.31
-kube-bench run --targets etcd --version 1.31
-kube-bench run --targets policies --version 1.31
+kube-bench run --targets master --version 1.32
+kube-bench run --targets node --version 1.32
+kube-bench run --targets controlplane --version 1.32
+kube-bench run --targets etcd --version 1.32
+kube-bench run --targets policies --version 1.32
 ```
 
 # /proc

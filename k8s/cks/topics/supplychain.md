@@ -49,22 +49,21 @@ Another way to see it by how it is assigned to a pod
 
 ```sh
 $ kubectl get pods -n ns -o='custom-columns=NAME:metadata.name,IMAGE:spec.containers[*].image' -A
-NAME                                      IMAGE
-cassandra                                 nginx
-accessor                                  nginx
-backend                                   nginx
-frontend                                  nginx
-calico-kube-controllers-94fb6bc47-m96tw   docker.io/calico/kube-controllers:v3.24.1
-canal-2fzt4                               docker.io/calico/node:v3.24.1,quay.io/coreos/flannel:v0.15.1
-canal-p98xk                               docker.io/calico/node:v3.24.1,quay.io/coreos/flannel:v0.15.1
-coredns-7c65d6cfc9-8nrl2                  registry.k8s.io/coredns/coredns:v1.11.3
-coredns-7c65d6cfc9-9bttv                  registry.k8s.io/coredns/coredns:v1.11.3
-etcd-master                               registry.k8s.io/etcd:3.5.15-0
-kube-apiserver-master                     registry.k8s.io/kube-apiserver:v1.31.5
-kube-controller-manager-master            registry.k8s.io/kube-controller-manager:v1.31.5
-kube-proxy-x7qzd                          registry.k8s.io/kube-proxy:v1.31.5
-kube-proxy-xtjkr                          registry.k8s.io/kube-proxy:v1.31.5
-kube-scheduler-master                     registry.k8s.io/kube-scheduler:v1.31.5
+NAME                             IMAGE
+cassandra                        nginx
+accessor                         nginx
+backend                          nginx
+frontend                         nginx
+coredns-668d6bf9bc-dnp8p         registry.k8s.io/coredns/coredns:v1.11.3
+coredns-668d6bf9bc-vkft6         registry.k8s.io/coredns/coredns:v1.11.3
+etcd-master                      registry.k8s.io/etcd:3.5.16-0
+kube-apiserver-master            registry.k8s.io/kube-apiserver:v1.32.6
+kube-controller-manager-master   registry.k8s.io/kube-controller-manager:v1.32.6
+kube-proxy-bj69n                 registry.k8s.io/kube-proxy:v1.32.6
+kube-proxy-m87mr                 registry.k8s.io/kube-proxy:v1.32.6
+kube-scheduler-master            registry.k8s.io/kube-scheduler:v1.32.6
+weave-net-dmwrc                  weaveworks/weave-kube:latest,weaveworks/weave-npc:latest
+weave-net-k95lj                  weaveworks/weave-kube:latest,weaveworks/weave-npc:latest
 ```
 
 # Trusted Images with OPA

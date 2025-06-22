@@ -38,20 +38,24 @@ On Ubuntu, show what versions you can upgrade to:
 ```sh
 $ sudo apt get update
 $ sudo apt-cache show kubeadm | grep Version
+Version: 1.32.6-1.1
+Version: 1.32.5-1.1
+Version: 1.32.4-1.1
+Version: 1.32.3-1.1
+Version: 1.32.2-1.1
+Version: 1.32.1-1.1
+Version: 1.32.0-1.1
+Version: 1.31.10-1.1
+Version: 1.31.9-1.1
+Version: 1.31.8-1.1
+Version: 1.31.7-1.1
+Version: 1.31.6-1.1
 Version: 1.31.5-1.1
 Version: 1.31.4-1.1
 Version: 1.31.3-1.1
 Version: 1.31.2-1.1
 Version: 1.31.1-1.1
 Version: 1.31.0-1.1
-Version: 1.30.5-1.1
-Version: 1.29.6-1.1
-Version: 1.29.5-1.1
-Version: 1.29.4-2.1
-Version: 1.29.3-1.1
-Version: 1.29.2-1.1
-Version: 1.29.1-1.1
-Version: 1.29.0-1.1
 ```
 
 Unmark kubeadm for upgrade:

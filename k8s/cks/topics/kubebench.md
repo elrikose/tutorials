@@ -15,7 +15,7 @@ https://github.com/aquasecurity/kube-bench
 Run it with Docker:
 
 ```sh
-$ docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t docker.io/aquasec/kube-bench:latest run --version 1.31
+$ docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t docker.io/aquasec/kube-bench:latest run --version 1.32
 ```
 
 Options
@@ -41,10 +41,10 @@ Here are all the benchmark section versions
 4.3 kube-proxy
 
 
-Here is where you just check benchmark 1.2.20 for Kubernetes version 1.31
+Here is where you just check benchmark 1.2.20 for Kubernetes version 1.32
 
 ```sh
-$ docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t docker.io/aquasec/kube-bench:latest run --targets master -c 1.2.20 --version 1.31
+$ docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -t docker.io/aquasec/kube-bench:latest run --targets master -c 1.2.20 --version 1.32
 [INFO] 1 Control Plane Security Configuration
 [INFO] 1.2 API Server
 [WARN] 1.2.20 Ensure that the --request-timeout argument is set as appropriate (Manual)

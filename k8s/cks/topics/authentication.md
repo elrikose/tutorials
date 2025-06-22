@@ -181,7 +181,7 @@ $ curl https://10.154.161.198:6443/version --cacert ca.crt --cert admin.crt --ke
 {
   "major": "1",
   "minor": "31",
-  "gitVersion": "v1.31.3",
+  "gitVersion": "v1.32.6",
   "gitCommit": "c83cbee114ddb732cdc06d3d1b62c9eb9220726f",
   "gitTreeState": "clean",
   "buildDate": "2024-11-19T13:48:20Z",
