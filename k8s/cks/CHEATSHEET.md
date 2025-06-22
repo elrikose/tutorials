@@ -23,6 +23,7 @@ kdel pod nginx
 
 # apt
 
+
 ```sh
 # Update list of all available packages
 sudo apt update
@@ -35,6 +36,15 @@ sudo apt install tree=2.1.1-2ubuntu3
 
 # Upgrade all installed items without prompting
 sudo apt upgrade -y
+```
+
+NOTE: Kubernetes requires that you have the keyring version installed for the `apt list` functionality below to report the correct info
+
+```sh
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-1-32-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-1-32-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+apt update
+apt install -y containerd kubelet=${KUBE_VERSION}-1.1 kubeadm=${KUBE_VERSION}-1.1 kubectl=${KUBE_VERSION}-1.1 kubernetes-cni
 ```
 
 App info
